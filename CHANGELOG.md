@@ -1,5 +1,11 @@
 # @atkvs/modal-renderer
 
+## 1.1.2
+
+### Patch Changes
+
+- 2f0248a: update docs
+
 ## 1.1.0
 
 ### Minor Changes
