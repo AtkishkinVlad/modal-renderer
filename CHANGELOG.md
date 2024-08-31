@@ -1,5 +1,11 @@
 # @atkvs/modal-renderer
 
+## 1.2.0
+
+### Minor Changes
+
+- 0c0299e: try fix exports
+
 ## 1.1.2
 
 ### Patch Changes
