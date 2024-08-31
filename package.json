@@ -21,7 +21,8 @@
     "build": "tsc",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "check-format": "prettier --check ."
+    "check-format": "prettier --check .",
+    "ci": "npm run build && npm run check-format"
   },
   "dependencies": {
     "react": "18.3.1",
