@@ -1,5 +1,11 @@
 # @atkvs/modal-renderer
 
+## 1.3.0
+
+### Minor Changes
+
+- 1c10cd1: add minify code
+
 ## 1.2.0
 
 ### Minor Changes
