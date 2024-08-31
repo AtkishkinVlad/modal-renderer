@@ -10,3 +10,6 @@ pre-commit:
     format:
       tags: format files
       run: npm run format {staged_files}
+    commit-lint:
+      tags: check conventional commits
+      run: npx commitlint --from=HEAD

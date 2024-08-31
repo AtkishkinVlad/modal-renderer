@@ -33,7 +33,8 @@
     "check-exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm",
     "local-release": "changeset version && changeset publish",
     "local-publish": "npm publish --access=public",
-    "prepare": "npx lefthook install"
+    "prepare": "npx lefthook install",
+    "commitlint": "commitlint"
   },
   "exports": {
     ".": {
@@ -48,6 +49,8 @@
   "devDependencies": {
     "@arethetypeswrong/cli": "0.15.4",
     "@changesets/cli": "^2.27.7",
+    "@commitlint/cli": "^19.4.1",
+    "@commitlint/config-conventional": "^19.4.1",
     "@eslint/js": "9.9.0",
     "@types/node": "22.5.1",
     "@types/react": "18.3.3",
