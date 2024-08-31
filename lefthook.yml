@@ -1,6 +1,12 @@
 pre-push:
   parallel: true
   commands:
+    check-format:
+      tags: check format
+      run: npm run check-format
+    check-exports:
+      tags: check exports in npm package
+      run: check-exports
     lint:
       tags: lint files
       run: npm run lint
