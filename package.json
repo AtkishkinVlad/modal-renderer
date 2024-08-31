@@ -3,7 +3,7 @@
   "private": false,
   "version": "1.1.2",
   "type": "module",
-  "description": "hooks for render modal",
+  "description": "React hooks for modals-manager",
   "keywords": [
     "react",
     "react-hooks",
@@ -41,10 +41,6 @@
       "import": "./dist/index.js",
       "default": "./dist/index.cjs"
     }
-  },
-  "dependencies": {
-    "react": "18.3.1",
-    "react-dom": "18.3.1"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.15.4",
