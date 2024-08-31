@@ -48,7 +48,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '20'
-          scope: '@atkvs'
       - run: npm ci
       - uses: JS-DevTools/npm-publish@v3
         with:
@@ -57,3 +56,4 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           registry: 'https://npm.pkg.github.com'
+          access: public
