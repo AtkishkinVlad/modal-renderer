@@ -6,6 +6,11 @@ on:
     branches:
       - main
 
+permissions:
+  actions: write
+  contents: write
+  packages: write
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
