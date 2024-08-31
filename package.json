@@ -1,6 +1,6 @@
 {
   "name": "@atkvs/modal-renderer",
-  "private": true,
+  "private": false,
   "version": "1.0.1",
   "type": "module",
   "description": "hooks for render modal",
