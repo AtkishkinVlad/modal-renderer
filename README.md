@@ -6,4 +6,4 @@ React hooks for modals-manager
 
 ## Example
 
-[Stackblitz](https://stackblitz.com/edit/vitejs-vite-cz3yze?file=README.md)
+[Stackblitz](https://stackblitz.com/edit/vitejs-vite-cz3yze?file=src%2FApp.tsx)
