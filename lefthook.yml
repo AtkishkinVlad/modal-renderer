@@ -1,15 +1,18 @@
 pre-push:
+  parallel: true
   commands:
     lint:
       tags: lint files
       run: npm run lint
 
+commit-msg:
+  commands:
+    commit-lint:
+      tags: check conventional commits
+      run: npx commitlint --edit
+
 pre-commit:
-  parallel: true
   commands:
     format:
       tags: format files
       run: npm run format {staged_files}
-    commit-lint:
-      tags: check conventional commits
-      run: npx commitlint --from=HEAD
