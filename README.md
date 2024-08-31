@@ -2,7 +2,7 @@
 
 ## Description
 
-React hooks for modals-manager
+React hooks for [modals-manager](https://github.com/eBay/nice-modal-react?tab=readme-ov-file#motivation)
 
 ## Example
 
