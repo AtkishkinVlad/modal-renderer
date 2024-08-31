@@ -1,0 +1,12 @@
+pre-push:
+  commands:
+    packages-audit:
+      tags: lint files
+      run: npm run lint
+
+pre-commit:
+  parallel: true
+  commands:
+    eslint:
+      tags: format files
+      run: npm run format {staged_files}
