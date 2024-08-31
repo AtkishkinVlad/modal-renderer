@@ -1,7 +1,7 @@
 {
   "name": "@atkvs/modal-renderer",
   "private": false,
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "description": "hooks for render modal",
   "keywords": [
@@ -32,8 +32,7 @@
     "ci": "npm run build && npm run check-format && npm run check-exports && npm run lint",
     "check-exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm",
     "local-release": "changeset version && changeset publish",
-    "prepublishOnly": "npm run ci",
-    "publish": "npm publish --access=public"
+    "local-publish": "npm publish --access=public"
   },
   "exports": {
     ".": {
@@ -60,8 +59,7 @@
     "prettier": "3.3.3",
     "tsup": "^8.2.4",
     "typescript": "5.5.3",
-    "typescript-eslint": "8.0.1",
-    "vite": "5.4.1"
+    "typescript-eslint": "8.0.1"
   },
   "peerDependencies": {
     "@types/react": "^17.0.0 || ^18.0.0",
