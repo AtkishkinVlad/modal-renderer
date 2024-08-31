@@ -34,7 +34,7 @@
     "local-release": "changeset version && changeset publish",
     "local-publish": "npm publish --access=public",
     "prepare": "npx lefthook install",
-    "commitlint": "commitlint"
+    "commit": "better-commits"
   },
   "exports": {
     ".": {
@@ -48,14 +48,14 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.15.4",
-    "@changesets/cli": "^2.27.7",
-    "@commitlint/cli": "^19.4.1",
-    "@commitlint/config-conventional": "^19.4.1",
+    "@changesets/cli": "2.27.7",
+    "@commitlint/cli": "19.4.1",
+    "@commitlint/config-conventional": "19.4.1",
     "@eslint/js": "9.9.0",
     "@types/node": "22.5.1",
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",
-    "@vitejs/plugin-react-swc": "3.5.0",
+    "better-commits": "1.15.7",
     "eslint": "9.9.0",
     "eslint-plugin-react-hooks": "5.1.0-rc.0",
     "eslint-plugin-react-refresh": "0.4.9",
