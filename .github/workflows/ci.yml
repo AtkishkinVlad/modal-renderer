@@ -41,11 +41,14 @@ jobs:
     permissions:
       contents: read
       packages: write
+      attestations: write
+      id-token: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v3
         with:
           node-version: '20'
+          scope: '@atkvs'
       - run: npm ci
       - uses: JS-DevTools/npm-publish@v3
         with:
@@ -53,4 +56,4 @@ jobs:
       - uses: JS-DevTools/npm-publish@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          registry: "https://npm.pkg.github.com"
+          registry: 'https://npm.pkg.github.com'
