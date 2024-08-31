@@ -1,0 +1,49 @@
+{
+  "name": "@atkvs/modal-renderer",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "hooks for render modal",
+  "keywords": ["react", "react-hooks", "modal"],
+  "homepage": "https://github.com/AtkishkinVlad/modal-renderer",
+  "bugs": {
+    "url": "https://github.com/AtkishkinVlad/modal-renderer/issues"
+  },
+  "license": "MIT",
+  "author": "Atkishkin Vlad <vladatkishkin@vk.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AtkishkinVlad/modal-renderer.git"
+  },
+  "files": ["dist"],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "check-format": "prettier --check ."
+  },
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.9.0",
+    "@types/react": "18.3.3",
+    "@types/react-dom": "18.3.0",
+    "@vitejs/plugin-react-swc": "3.5.0",
+    "eslint": "9.9.0",
+    "eslint-plugin-react-hooks": "5.1.0-rc.0",
+    "eslint-plugin-react-refresh": "0.4.9",
+    "globals": "15.9.0",
+    "typescript": "5.5.3",
+    "typescript-eslint": "8.0.1",
+    "vite": "5.4.1",
+    "prettier": "3.3.3"
+  },
+  "peerDependencies": {
+    "@types/react": "^17.0.0 || ^18.0.0",
+    "react": "^17.0.0 || ^18.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0"
+  }
+}
