@@ -47,10 +47,10 @@ jobs:
         with:
           node-version: '20'
       - run: npm ci
-      # - uses: JS-DevTools/npm-publish@v3
-      #   with:
-      #     token: ${{ secrets.NPM_TOKEN }}
       - uses: JS-DevTools/npm-publish@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          registry: 'https://npm.pkg.github.com'
+          token: ${{ secrets.NPM_TOKEN }}
+      # - uses: JS-DevTools/npm-publish@v3
+      #   with:
+      #     token: ${{ secrets.GITHUB_TOKEN }}
+      #     registry: 'https://npm.pkg.github.com'
