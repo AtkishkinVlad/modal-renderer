@@ -1,12 +1,9 @@
-# Modal renderer
+# @atkvs/modal-renderer
 
 ## Description
 
-React-hook for render modals
+React hooks for modals-manager
 
-## Start project
+## Example
 
-```bash
-npm i
-npm run dev
-```
+[Stackblitz](https://stackblitz.com/edit/vitejs-vite-cz3yze?file=README.md)
