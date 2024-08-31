@@ -1,5 +1,10 @@
-import React, { type FC, type PropsWithChildren, useMemo, useState } from 'react';
-import { ModalsContext, type ModalsContextItem } from './Modals.context.js';
+import React, {
+  type FC,
+  type PropsWithChildren,
+  useMemo,
+  useState,
+} from 'react';
+import { ModalsContext, type ModalsContextItem } from './Modals.context';
 
 export const ModalsProvider: FC<PropsWithChildren> = ({ children }) => {
   const [modals, setModals] = useState<ModalsContextItem[]>([]);
@@ -26,7 +31,7 @@ export const ModalsProvider: FC<PropsWithChildren> = ({ children }) => {
         ))}
       </>
     ),
-    [modals]
+    [modals],
   );
 
   const publicApi = {

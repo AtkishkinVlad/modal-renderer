@@ -1,3 +1,3 @@
-export * from './Modals.context.js';
-export * from './Modals.hooks.js';
-export * from './Modals.provider.js';
+export * from './Modals.context';
+export * from './Modals.hooks';
+export * from './Modals.provider';

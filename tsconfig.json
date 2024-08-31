@@ -10,25 +10,13 @@
     "moduleDetection": "force",
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
-
     /* Strictness */
     "strict": true,
+    "module": "Preserve",
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
-
     "lib": ["es2022"],
-
-    /* If transpiling with TypeScript: */
-    "module": "NodeNext",
-    "outDir": "dist",
-    "rootDir": "src",
-    "sourceMap": true,
-
-    /* AND if you're building for a library: */
-    "declaration": true,
-
-    /* AND if you're building for a library in a monorepo: */
-    "declarationMap": true
+    "noEmit": true
   },
-  "exclude": ["**/vite.config.ts", "**/dist"]
+  "exclude": ["**/vite.config.ts", "**/dist", "**/tsup.config.ts"]
 }
