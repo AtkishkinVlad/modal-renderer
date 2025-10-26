@@ -15,4 +15,17 @@ export default defineConfig({
   loader: {
     '.css': 'copy',
   },
+  // Копируем CSS файлы в dist
+  onSuccess: async () => {
+    const { copyFileSync, existsSync } = await import('fs');
+    const { join } = await import('path');
+
+    const cssSource = join('src', 'styles.css');
+    const cssDest = join('dist', 'styles.css');
+
+    if (existsSync(cssSource)) {
+      copyFileSync(cssSource, cssDest);
+      console.log('✅ CSS файл скопирован в dist/styles.css');
+    }
+  },
 });

@@ -1,9 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import {
-  ModalsProvider,
-  useModals,
-  useCreateModal,
-} from '@atkvs/modal-renderer';
+import { ModalsProvider, useCreateModal } from '@atkvs/modal-renderer';
 import React from 'react';
 
 // Модалка подтверждения
@@ -59,7 +55,6 @@ const ConfirmModal: React.FC<{
 
 // Компонент для демонстрации
 const ConfirmModalDemo: React.FC = () => {
-  const { openModal } = useModals();
   const createModal = useCreateModal();
   const [lastAction, setLastAction] = React.useState<string>('');
 
@@ -113,25 +108,18 @@ const ConfirmModalDemo: React.FC = () => {
   };
 
   const handleWarningAction = () => {
-    openModal({
-      id: 'warning-modal',
+    const { closeModal } = createModal({
       component: (
         <ConfirmModal
           message="Это действие может повлиять на работу системы. Продолжить?"
           type="warning"
           onConfirm={() => {
             setLastAction('Предупреждение проигнорировано');
-            openModal({
-              id: 'warning-modal',
-              component: <div>Модалка закрыта</div>,
-            });
+            closeModal();
           }}
           onCancel={() => {
             setLastAction('Действие отменено');
-            openModal({
-              id: 'warning-modal',
-              component: <div>Модалка закрыта</div>,
-            });
+            closeModal();
           }}
         />
       ),

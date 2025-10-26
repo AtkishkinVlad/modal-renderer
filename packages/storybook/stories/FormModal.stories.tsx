@@ -1,23 +1,35 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { ModalsProvider, useModals } from '@atkvs/modal-renderer';
+import { ModalsProvider, useCreateModal } from '@atkvs/modal-renderer';
 import React from 'react';
 
 // Модалка с формой
 const FormModal: React.FC<{
   onSubmit: (data: { name: string; email: string }) => void;
-}> = ({ onSubmit }) => {
-  const { closeModal } = useModals();
+  onClose: () => void;
+}> = ({ onSubmit, onClose }) => {
   const [formData, setFormData] = React.useState({ name: '', email: '' });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit(formData);
-    closeModal('form-modal');
+    onClose();
   };
 
   return (
-    <div style={{ padding: '20px', maxWidth: '500px' }}>
-      <h2 style={{ marginTop: 0 }}>Форма в модалке</h2>
+    <div style={{ padding: '24px', maxWidth: '500px' }}>
+      <h2
+        style={{
+          marginTop: 0,
+          fontSize: '1.5rem',
+          fontWeight: '600',
+          color: '#111827',
+          marginBottom: '20px',
+          fontFamily:
+            'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+        }}
+      >
+        Форма в модалке
+      </h2>
       <form
         onSubmit={handleSubmit}
         style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}
@@ -27,8 +39,12 @@ const FormModal: React.FC<{
             htmlFor="name"
             style={{
               display: 'block',
-              marginBottom: '5px',
-              fontWeight: 'bold',
+              marginBottom: '8px',
+              fontWeight: '500',
+              fontSize: '14px',
+              color: '#111827',
+              fontFamily:
+                'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
             }}
           >
             Имя:
@@ -41,10 +57,22 @@ const FormModal: React.FC<{
             required
             style={{
               width: '100%',
-              padding: '8px',
-              border: '1px solid #ccc',
-              borderRadius: '4px',
+              padding: '12px 16px',
+              border: '1px solid #d1d5db',
+              borderRadius: '8px',
               fontSize: '14px',
+              fontFamily:
+                'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+              transition: 'all 0.2s ease',
+              backgroundColor: '#ffffff',
+            }}
+            onFocus={(e) => {
+              e.target.style.borderColor = '#0066cc';
+              e.target.style.boxShadow = '0 0 0 3px rgba(0, 102, 204, 0.1)';
+            }}
+            onBlur={(e) => {
+              e.target.style.borderColor = '#d1d5db';
+              e.target.style.boxShadow = 'none';
             }}
           />
         </div>
@@ -53,8 +81,12 @@ const FormModal: React.FC<{
             htmlFor="email"
             style={{
               display: 'block',
-              marginBottom: '5px',
-              fontWeight: 'bold',
+              marginBottom: '8px',
+              fontWeight: '500',
+              fontSize: '14px',
+              color: '#111827',
+              fontFamily:
+                'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
             }}
           >
             Email:
@@ -69,10 +101,22 @@ const FormModal: React.FC<{
             required
             style={{
               width: '100%',
-              padding: '8px',
-              border: '1px solid #ccc',
-              borderRadius: '4px',
+              padding: '12px 16px',
+              border: '1px solid #d1d5db',
+              borderRadius: '8px',
               fontSize: '14px',
+              fontFamily:
+                'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+              transition: 'all 0.2s ease',
+              backgroundColor: '#ffffff',
+            }}
+            onFocus={(e) => {
+              e.target.style.borderColor = '#0066cc';
+              e.target.style.boxShadow = '0 0 0 3px rgba(0, 102, 204, 0.1)';
+            }}
+            onBlur={(e) => {
+              e.target.style.borderColor = '#d1d5db';
+              e.target.style.boxShadow = 'none';
             }}
           />
         </div>
@@ -81,14 +125,30 @@ const FormModal: React.FC<{
         >
           <button
             type="button"
-            onClick={() => closeModal('form-modal')}
+            onClick={onClose}
             style={{
-              padding: '8px 16px',
+              padding: '12px 24px',
               backgroundColor: '#6c757d',
               color: 'white',
               border: 'none',
-              borderRadius: '4px',
+              borderRadius: '8px',
               cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: '500',
+              fontFamily:
+                'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+              transition: 'all 0.2s ease',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = '#5a6268';
+              e.currentTarget.style.transform = 'translateY(-1px)';
+              e.currentTarget.style.boxShadow = '0 2px 6px rgba(0, 0, 0, 0.15)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = '#6c757d';
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.1)';
             }}
           >
             Отмена
@@ -96,12 +156,28 @@ const FormModal: React.FC<{
           <button
             type="submit"
             style={{
-              padding: '8px 16px',
-              backgroundColor: '#007bff',
+              padding: '12px 24px',
+              backgroundColor: '#0066cc',
               color: 'white',
               border: 'none',
-              borderRadius: '4px',
+              borderRadius: '8px',
               cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: '500',
+              fontFamily:
+                'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+              transition: 'all 0.2s ease',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = '#004499';
+              e.currentTarget.style.transform = 'translateY(-1px)';
+              e.currentTarget.style.boxShadow = '0 2px 6px rgba(0, 0, 0, 0.15)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = '#0066cc';
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.1)';
             }}
           >
             Сохранить
@@ -114,16 +190,15 @@ const FormModal: React.FC<{
 
 // Компонент для демонстрации
 const FormModalDemo: React.FC = () => {
-  const { openModal } = useModals();
+  const createModal = useCreateModal();
   const [submittedData, setSubmittedData] = React.useState<{
     name: string;
     email: string;
   } | null>(null);
 
   const handleOpenFormModal = () => {
-    openModal({
-      id: 'form-modal',
-      component: <FormModal onSubmit={setSubmittedData} />,
+    const { closeModal } = createModal({
+      component: <FormModal onSubmit={setSubmittedData} onClose={closeModal} />,
       options: {
         closeOnOverlayClick: false,
         closeOnEscape: true,
@@ -207,12 +282,11 @@ export const Default: Story = {
 
 // Компонент для демонстрации с валидацией
 const FormModalValidationDemo: React.FC = () => {
-  const { openModal } = useModals();
+  const createModal = useCreateModal();
   const [errors, setErrors] = React.useState<string[]>([]);
 
   const handleOpenFormModal = () => {
-    openModal({
-      id: 'form-modal-validation',
+    const { closeModal } = createModal({
       component: (
         <FormModal
           onSubmit={(data) => {
@@ -228,6 +302,7 @@ const FormModalValidationDemo: React.FC = () => {
               console.log('Форма валидна:', data);
             }
           }}
+          onClose={closeModal}
         />
       ),
       options: {

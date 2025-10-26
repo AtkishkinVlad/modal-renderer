@@ -5,3 +5,6 @@ export * from './Modals.provider';
 
 // Дополнительные типы и утилиты
 export * from './types';
+
+// Стили
+import './styles.css';
