@@ -1,147 +1,16 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { ModalsProvider, useModals, useModal, useCreateModal } from '../index';
-import { beforeEach, describe, expect, test } from 'vitest';
-
-// Тестовый компонент модалки
-const TestModal: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
-  const { closeModal } = useModals();
-
-  return (
-    <div data-testid="test-modal">
-      <h2>Test Modal</h2>
-      <p>This is a test modal</p>
-      <button
-        data-testid="close-button"
-        onClick={() => {
-          closeModal('test-modal');
-          onClose?.();
-        }}
-      >
-        Close
-      </button>
-    </div>
-  );
-};
-
-// Тестовый компонент с формой
-const FormModal: React.FC<{
-  onSubmit: (data: { name: string; email: string }) => void;
-}> = ({ onSubmit }) => {
-  const { closeModal } = useModals();
-  const [formData, setFormData] = React.useState({ name: '', email: '' });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSubmit(formData);
-    closeModal('form-modal');
-  };
-
-  return (
-    <form data-testid="form-modal" onSubmit={handleSubmit}>
-      <h2>Form Modal</h2>
-      <input
-        data-testid="name-input"
-        type="text"
-        value={formData.name}
-        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-        placeholder="Name"
-      />
-      <input
-        data-testid="email-input"
-        type="email"
-        value={formData.email}
-        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-        placeholder="Email"
-      />
-      <button data-testid="submit-button" type="submit">
-        Submit
-      </button>
-      <button
-        data-testid="cancel-button"
-        type="button"
-        onClick={() => closeModal('form-modal')}
-      >
-        Cancel
-      </button>
-    </form>
-  );
-};
-
-// Основной тестовый компонент
-const TestApp: React.FC = () => {
-  const { openModal, closeModal, closeAllModals, getOpenModals, isModalOpen } =
-    useModals();
-  const { close: closeTestModal, isOpen } = useModal('test-modal');
-  const createModal = useCreateModal();
-
-  const handleOpenSimpleModal = () => {
-    openModal({
-      id: 'test-modal',
-      component: <TestModal />,
-    });
-  };
-
-  const handleOpenFormModal = () => {
-    openModal({
-      id: 'form-modal',
-      component: <FormModal onSubmit={console.log} />,
-    });
-  };
-
-  const handleCreateModal = () => {
-    createModal({
-      component: <TestModal />,
-    });
-  };
-
-  return (
-    <div>
-      <button data-testid="open-modal" onClick={handleOpenSimpleModal}>
-        Open Modal
-      </button>
-
-      <button data-testid="open-form-modal" onClick={handleOpenFormModal}>
-        Open Form Modal
-      </button>
-
-      <button data-testid="create-modal" onClick={handleCreateModal}>
-        Create Modal
-      </button>
-
-      <button
-        data-testid="close-modal"
-        onClick={() => closeModal('test-modal')}
-      >
-        Close Modal
-      </button>
-
-      <button data-testid="close-test-modal" onClick={closeTestModal}>
-        Close Test Modal
-      </button>
-
-      <button data-testid="close-all" onClick={closeAllModals}>
-        Close All
-      </button>
-
-      <div data-testid="modal-status">
-        {isModalOpen('test-modal') ? 'Open' : 'Closed'}
-      </div>
-
-      <div data-testid="modal-count">{getOpenModals().length}</div>
-
-      <div data-testid="test-modal-status">{isOpen ? 'Open' : 'Closed'}</div>
-    </div>
-  );
-};
-
-// Компонент с провайдером
-const AppWithProvider: React.FC = () => (
-  <ModalsProvider>
-    <TestApp />
-  </ModalsProvider>
-);
+import { ModalsProvider } from '../index';
+import { beforeEach, describe, test, expect } from 'vitest';
+import { AppWithProvider } from './test-components';
+import {
+  waitForModal,
+  waitForModalToClose,
+  getModalStatus,
+  getModalCount,
+  getTestModalStatus,
+} from './test-utils';
 
 describe('Modal Renderer', () => {
   beforeEach(() => {
@@ -150,183 +19,195 @@ describe('Modal Renderer', () => {
   });
 
   test('renders app without modals initially', () => {
-    render(<AppWithProvider />);
+    render(
+      <ModalsProvider>
+        <AppWithProvider />
+      </ModalsProvider>,
+    );
 
-    expect(screen.getByTestId('modal-status')).toHaveTextContent('Closed');
-    expect(screen.getByTestId('modal-count')).toHaveTextContent('0');
-    expect(screen.getByTestId('test-modal-status')).toHaveTextContent('Closed');
+    expect(getModalStatus()).toHaveTextContent('Closed');
+    expect(getModalCount()).toHaveTextContent('0');
+    expect(getTestModalStatus()).toHaveTextContent('Closed');
   });
 
   test('opens modal when open button is clicked', async () => {
-    render(<AppWithProvider />);
+    render(
+      <ModalsProvider>
+        <AppWithProvider />
+      </ModalsProvider>,
+    );
 
     fireEvent.click(screen.getByTestId('open-modal'));
 
-    await waitFor(() => {
-      expect(screen.getByTestId('test-modal')).toBeInTheDocument();
-    });
+    await waitForModal('test-modal');
 
-    expect(screen.getByTestId('modal-status')).toHaveTextContent('Open');
-    expect(screen.getByTestId('modal-count')).toHaveTextContent('1');
-    expect(screen.getByTestId('test-modal-status')).toHaveTextContent('Open');
+    expect(getModalStatus()).toHaveTextContent('Open');
+    expect(getModalCount()).toHaveTextContent('1');
+    expect(getTestModalStatus()).toHaveTextContent('Open');
   });
 
   test('closes modal when close button is clicked', async () => {
-    render(<AppWithProvider />);
+    render(
+      <ModalsProvider>
+        <AppWithProvider />
+      </ModalsProvider>,
+    );
 
     // Открываем модалку
     fireEvent.click(screen.getByTestId('open-modal'));
 
-    await waitFor(() => {
-      expect(screen.getByTestId('test-modal')).toBeInTheDocument();
-    });
+    await waitForModal('test-modal');
 
     // Закрываем модалку
     fireEvent.click(screen.getByTestId('close-modal'));
 
-    await waitFor(() => {
-      expect(screen.queryByTestId('test-modal')).not.toBeInTheDocument();
-    });
+    await waitForModalToClose('test-modal');
 
-    expect(screen.getByTestId('modal-status')).toHaveTextContent('Closed');
-    expect(screen.getByTestId('modal-count')).toHaveTextContent('0');
+    expect(getModalStatus()).toHaveTextContent('Closed');
+    expect(getModalCount()).toHaveTextContent('0');
   });
 
   test('closes modal when close button inside modal is clicked', async () => {
-    render(<AppWithProvider />);
+    render(
+      <ModalsProvider>
+        <AppWithProvider />
+      </ModalsProvider>,
+    );
 
     // Открываем модалку
     fireEvent.click(screen.getByTestId('open-modal'));
 
-    await waitFor(() => {
-      expect(screen.getByTestId('test-modal')).toBeInTheDocument();
-    });
+    await waitForModal('test-modal');
 
-    // Закрываем модалку через кнопку внутри
+    // Закрываем модалку через кнопку внутри модалки
     fireEvent.click(screen.getByTestId('close-button'));
 
-    await waitFor(() => {
-      expect(screen.queryByTestId('test-modal')).not.toBeInTheDocument();
-    });
+    await waitForModalToClose('test-modal');
+
+    expect(getModalStatus()).toHaveTextContent('Closed');
+    expect(getModalCount()).toHaveTextContent('0');
   });
 
   test('closes all modals when close all button is clicked', async () => {
-    render(<AppWithProvider />);
+    render(
+      <ModalsProvider>
+        <AppWithProvider />
+      </ModalsProvider>,
+    );
 
     // Открываем несколько модалок
     fireEvent.click(screen.getByTestId('open-modal'));
     fireEvent.click(screen.getByTestId('open-form-modal'));
 
-    await waitFor(() => {
-      expect(screen.getByTestId('modal-count')).toHaveTextContent('2');
-    });
+    await waitForModal('test-modal');
+    await waitForModal('form-modal');
 
     // Закрываем все модалки
     fireEvent.click(screen.getByTestId('close-all'));
 
-    await waitFor(() => {
-      expect(screen.queryByTestId('test-modal')).not.toBeInTheDocument();
-      expect(screen.queryByTestId('form-modal')).not.toBeInTheDocument();
-    });
+    await waitForModalToClose('test-modal');
+    await waitForModalToClose('form-modal');
 
-    expect(screen.getByTestId('modal-count')).toHaveTextContent('0');
+    expect(getModalCount()).toHaveTextContent('0');
   });
 
   test('useModal hook works correctly', async () => {
-    render(<AppWithProvider />);
+    render(
+      <ModalsProvider>
+        <AppWithProvider />
+      </ModalsProvider>,
+    );
 
-    // Открываем модалку через хук
     fireEvent.click(screen.getByTestId('open-modal'));
 
-    await waitFor(() => {
-      expect(screen.getByTestId('test-modal')).toBeInTheDocument();
-    });
+    await waitForModal('test-modal');
 
-    // Закрываем модалку через хук
-    fireEvent.click(screen.getByTestId('close-test-modal'));
-
-    await waitFor(() => {
-      expect(screen.queryByTestId('test-modal')).not.toBeInTheDocument();
-    });
+    expect(getModalStatus()).toHaveTextContent('Open');
+    expect(getModalCount()).toHaveTextContent('1');
+    expect(getTestModalStatus()).toHaveTextContent('Open');
   });
 
   test('useCreateModal hook works correctly', async () => {
-    render(<AppWithProvider />);
+    render(
+      <ModalsProvider>
+        <AppWithProvider />
+      </ModalsProvider>,
+    );
 
-    // Создаем модалку через хук
     fireEvent.click(screen.getByTestId('create-modal'));
 
-    await waitFor(() => {
-      expect(screen.getByTestId('test-modal')).toBeInTheDocument();
-    });
+    await waitForModal('test-modal');
 
-    expect(screen.getByTestId('modal-count')).toHaveTextContent('1');
+    expect(getModalStatus()).toHaveTextContent('Open');
+    expect(getModalCount()).toHaveTextContent('1');
   });
 
   test('form modal works correctly', async () => {
-    const user = userEvent.setup();
-    render(<AppWithProvider />);
+    render(
+      <ModalsProvider>
+        <AppWithProvider />
+      </ModalsProvider>,
+    );
 
-    // Открываем модалку с формой
     fireEvent.click(screen.getByTestId('open-form-modal'));
 
-    await waitFor(() => {
-      expect(screen.getByTestId('form-modal')).toBeInTheDocument();
-    });
+    await waitForModal('form-modal');
 
-    // Заполняем форму
-    await user.type(screen.getByTestId('name-input'), 'John Doe');
-    await user.type(screen.getByTestId('email-input'), 'john@example.com');
+    const nameInput = screen.getByTestId('name-input');
+    const emailInput = screen.getByTestId('email-input');
 
-    expect(screen.getByTestId('name-input')).toHaveValue('John Doe');
-    expect(screen.getByTestId('email-input')).toHaveValue('john@example.com');
+    await userEvent.type(nameInput, 'John Doe');
+    await userEvent.type(emailInput, 'john@example.com');
 
-    // Отправляем форму
     fireEvent.click(screen.getByTestId('submit-button'));
 
-    await waitFor(() => {
-      expect(screen.queryByTestId('form-modal')).not.toBeInTheDocument();
-    });
+    await waitForModalToClose('form-modal');
+
+    expect(getModalStatus()).toHaveTextContent('Closed');
+    expect(getModalCount()).toHaveTextContent('0');
   });
 
   test('modal with custom options works correctly', async () => {
-    render(<AppWithProvider />);
+    render(
+      <ModalsProvider>
+        <AppWithProvider />
+      </ModalsProvider>,
+    );
 
-    // Открываем модалку с формой (которая имеет closeOnOverlayClick: false по умолчанию)
     fireEvent.click(screen.getByTestId('open-form-modal'));
 
-    await waitFor(() => {
-      expect(screen.getByTestId('form-modal')).toBeInTheDocument();
-    });
+    await waitForModal('form-modal');
 
-    // Пытаемся закрыть через кнопку отмены
-    fireEvent.click(screen.getByTestId('cancel-button'));
-
-    await waitFor(() => {
-      expect(screen.queryByTestId('form-modal')).not.toBeInTheDocument();
-    });
+    expect(getModalStatus()).toHaveTextContent('Open');
+    expect(getModalCount()).toHaveTextContent('1');
   });
 
   test('multiple modals can be opened simultaneously', async () => {
-    render(<AppWithProvider />);
+    render(
+      <ModalsProvider>
+        <AppWithProvider />
+      </ModalsProvider>,
+    );
 
     // Открываем первую модалку
     fireEvent.click(screen.getByTestId('open-modal'));
 
-    await waitFor(() => {
-      expect(screen.getByTestId('test-modal')).toBeInTheDocument();
-    });
+    await waitForModal('test-modal');
 
     // Открываем вторую модалку
     fireEvent.click(screen.getByTestId('open-form-modal'));
 
-    await waitFor(() => {
-      expect(screen.getByTestId('form-modal')).toBeInTheDocument();
-    });
+    await waitForModal('form-modal');
 
-    // Проверяем, что обе модалки открыты
-    expect(screen.getByTestId('modal-count')).toHaveTextContent('2');
-    expect(screen.getByTestId('test-modal')).toBeInTheDocument();
-    expect(screen.getByTestId('form-modal')).toBeInTheDocument();
+    expect(getModalStatus()).toHaveTextContent('Open');
+    expect(getModalCount()).toHaveTextContent('2');
+
+    // Закрываем все модалки
+    fireEvent.click(screen.getByTestId('close-all'));
+
+    await waitForModalToClose('test-modal');
+    await waitForModalToClose('form-modal');
+
+    expect(getModalCount()).toHaveTextContent('0');
   });
 });

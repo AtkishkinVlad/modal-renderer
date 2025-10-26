@@ -1,19 +1,5 @@
 import '@testing-library/jest-dom';
-import { vi } from 'vitest';
-
-// Мокаем createPortal для тестов
-const mockCreatePortal = (children: React.ReactNode) => children;
-
-vi.mock('react-dom', () => ({
-  ...vi.importActual('react-dom'),
-  createPortal: mockCreatePortal,
-}));
-
-// Мокаем document.body для тестов
-Object.defineProperty(document, 'body', {
-  value: document.createElement('body'),
-  writable: true,
-});
+import { vi, beforeEach } from 'vitest';
 
 // Мокаем window.matchMedia
 Object.defineProperty(window, 'matchMedia', {
@@ -28,4 +14,15 @@ Object.defineProperty(window, 'matchMedia', {
     removeEventListener: vi.fn(),
     dispatchEvent: vi.fn(),
   })),
+});
+
+// Простой мок для createPortal - просто возвращаем children
+vi.mock('react-dom', () => ({
+  ...vi.importActual('react-dom'),
+  createPortal: (children: React.ReactNode) => children,
+}));
+
+// Очищаем DOM перед каждым тестом
+beforeEach(() => {
+  document.body.innerHTML = '';
 });
