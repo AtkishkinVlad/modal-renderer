@@ -46,7 +46,9 @@
 }
 
 .modal-content {
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
   transition: transform 0.2s ease-out;
 }
 
@@ -65,7 +67,7 @@
     background-color: #1f2937;
     color: #f9fafb;
   }
-  
+
   .modal-overlay {
     background-color: rgba(0, 0, 0, 0.7);
   }

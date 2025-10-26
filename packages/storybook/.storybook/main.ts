@@ -1,15 +1,18 @@
-import { createRequire } from "node:module";
-import { dirname, join } from "node:path";
+import { createRequire } from 'node:module';
+import { dirname, join } from 'node:path';
 import type { StorybookConfig } from '@storybook/react-vite';
 
 const require = createRequire(import.meta.url);
 
 const config: StorybookConfig = {
   stories: ['../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
-  addons: [getAbsolutePath("@storybook/addon-links"), getAbsolutePath("@storybook/addon-docs")],
+  addons: [
+    getAbsolutePath('@storybook/addon-links'),
+    getAbsolutePath('@storybook/addon-docs'),
+  ],
 
   framework: {
-    name: getAbsolutePath("@storybook/react-vite"),
+    name: getAbsolutePath('@storybook/react-vite'),
     options: {},
   },
 
@@ -18,13 +21,14 @@ const config: StorybookConfig = {
     reactDocgen: 'react-docgen-typescript',
     reactDocgenTypescriptOptions: {
       shouldExtractLiteralValuesFromEnum: true,
-      propFilter: (prop) => (prop.parent ? !/node_modules/.test(prop.parent.fileName) : true),
+      propFilter: (prop) =>
+        prop.parent ? !/node_modules/.test(prop.parent.fileName) : true,
     },
-  }
+  },
 };
 
 export default config;
 
 function getAbsolutePath(value: string): string {
-  return dirname(require.resolve(join(value, "package.json")));
+  return dirname(require.resolve(join(value, 'package.json')));
 }

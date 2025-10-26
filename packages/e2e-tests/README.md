@@ -25,16 +25,19 @@ tests/
 ## Ключевые особенности
 
 ### 1. Fixture с Page Objects
+
 - **modal-fixtures.ts** предоставляет готовые page-objects для каждого типа модалок
 - Автоматическая инициализация всех необходимых объектов
 - Удобный доступ к `basePage`, `simpleModalPage`, `formModalPage`, `confirmModalPage`
 
 ### 2. Базовые локаторы с заголовками
+
 - **BaseStoryPage** содержит общие локаторы для всех модальных окон
 - Локаторы для заголовков, описаний, кнопок модалок
 - Методы для проверки состояния элементов
 
 ### 3. Разделение тестов по типам модалок
+
 - **simple-modal.spec.ts** - тесты простых модалок
 - **form-modal.spec.ts** - тесты модалок с формами
 - **confirm-modal.spec.ts** - тесты модалок подтверждения
@@ -44,21 +47,25 @@ tests/
 ## Использование
 
 ### Запуск всех тестов
+
 ```bash
 npm run test:e2e
 ```
 
 ### Запуск конкретного файла тестов
+
 ```bash
 npm run test:e2e -- simple-modal.spec.ts
 ```
 
 ### Запуск с UI
+
 ```bash
 npm run test:e2e:ui
 ```
 
 ### Запуск в headed режиме
+
 ```bash
 npm run test:e2e:headed
 ```
@@ -82,6 +89,7 @@ test('should test form modal', async ({ formModalPage }) => {
 ## Браузеры
 
 Тесты запускаются на следующих браузерах:
+
 - Chromium (Desktop)
 - Firefox (Desktop)
 - WebKit (Desktop)
@@ -91,6 +99,7 @@ test('should test form modal', async ({ formModalPage }) => {
 ## Конфигурация
 
 Конфигурация Playwright находится в `playwright.config.ts`:
+
 - Автоматический запуск Storybook сервера
 - Настройка базового URL для iframe
 - Конфигурация скриншотов и видео

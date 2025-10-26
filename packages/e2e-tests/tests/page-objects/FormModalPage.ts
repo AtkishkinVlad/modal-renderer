@@ -65,18 +65,18 @@ export class FormModalPage extends BaseStoryPage {
   async testFormSubmission(name: string, email: string) {
     await this.openFormModal();
     await this.expectFormToBeVisible();
-    
+
     // Заполняем форму
     await this.fillNameField(name);
     await this.fillEmailField(email);
-    
+
     // Проверяем, что поля заполнились
     await this.expectElementToHaveText('input[type="text"]', name);
     await this.expectElementToHaveText('input[type="email"]', email);
-    
+
     // Отправляем форму
     await this.submitForm();
-    
+
     // Проверяем, что модалка закрылась и данные отобразились
     await this.expectFormToBeHidden();
     await this.expectFormDataToBeDisplayed(name, email);
@@ -85,13 +85,13 @@ export class FormModalPage extends BaseStoryPage {
   async testFormValidation() {
     await this.openFormModalWithValidation();
     await this.expectFormToBeVisible();
-    
+
     // Пытаемся отправить пустую форму
     await this.submitForm();
-    
+
     // Проверяем, что модалка не закрылась (валидация сработала)
     await this.expectFormToBeVisible();
-    
+
     // Закрываем через отмену
     await this.cancelForm();
     await this.expectFormToBeHidden();

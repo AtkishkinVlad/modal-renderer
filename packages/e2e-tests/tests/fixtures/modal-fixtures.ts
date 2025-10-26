@@ -45,12 +45,12 @@ export const testUtils = {
 
   async takeScreenshotOnFailure(page: any, testName: string) {
     if (test.info().status === 'failed') {
-      await page.screenshot({ 
+      await page.screenshot({
         path: `test-results/screenshots/${testName}-failed.png`,
-        fullPage: true 
+        fullPage: true,
       });
     }
-  }
+  },
 };
 
 export { expect };

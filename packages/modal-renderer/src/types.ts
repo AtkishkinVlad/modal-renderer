@@ -121,7 +121,11 @@ export const ModalUtils = {
   }),
 
   /** Получение z-index для модалки */
-  getZIndex: (baseZIndex: number, index: number, alwaysOnTop = false): number => {
+  getZIndex: (
+    baseZIndex: number,
+    index: number,
+    alwaysOnTop = false,
+  ): number => {
     return alwaysOnTop ? baseZIndex + 10000 : baseZIndex + index;
   },
 } as const;

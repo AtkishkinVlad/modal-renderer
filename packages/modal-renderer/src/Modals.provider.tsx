@@ -50,34 +50,39 @@ export const ModalsProvider: FC<ModalsProviderProps> = ({
   }, []);
 
   // Открытие модалки
-  const openModal = useCallback((modal: ModalConfig) => {
-    const modalWithId = {
-      ...modal,
-      id: modal.id || generateId(),
-      options: {
-        closeOnOverlayClick: true,
-        closeOnEscape: true,
-        animated: true,
-        zIndex: baseZIndex,
-        ...defaultOptions,
-        ...modal.options,
-      },
-    };
+  const openModal = useCallback(
+    (modal: ModalConfig) => {
+      const modalWithId = {
+        ...modal,
+        id: modal.id || generateId(),
+        options: {
+          closeOnOverlayClick: true,
+          closeOnEscape: true,
+          animated: true,
+          zIndex: baseZIndex,
+          ...defaultOptions,
+          ...modal.options,
+        },
+      };
 
-    setModals((prevModals: ModalConfig[]) => {
-      // Если модалка с таким ID уже существует, заменяем её
-      const existingIndex = prevModals.findIndex((m: ModalConfig) => m.id === modalWithId.id);
-      if (existingIndex !== -1) {
-        const newModals = [...prevModals];
-        newModals[existingIndex] = modalWithId;
-        return newModals;
-      }
-      return [...prevModals, modalWithId];
-    });
+      setModals((prevModals: ModalConfig[]) => {
+        // Если модалка с таким ID уже существует, заменяем её
+        const existingIndex = prevModals.findIndex(
+          (m: ModalConfig) => m.id === modalWithId.id,
+        );
+        if (existingIndex !== -1) {
+          const newModals = [...prevModals];
+          newModals[existingIndex] = modalWithId;
+          return newModals;
+        }
+        return [...prevModals, modalWithId];
+      });
 
-    // Возвращаем функцию закрытия для этой конкретной модалки
-    return () => closeModal(modalWithId.id);
-  }, [generateId, baseZIndex, defaultOptions, closeModal]);
+      // Возвращаем функцию закрытия для этой конкретной модалки
+      return () => closeModal(modalWithId.id);
+    },
+    [generateId, baseZIndex, defaultOptions, closeModal],
+  );
 
   // Закрытие последней модалки
   const closeLastOpenedModal = useCallback(() => {
@@ -109,9 +114,12 @@ export const ModalsProvider: FC<ModalsProviderProps> = ({
   }, [modals]);
 
   // Проверка открытости модалки
-  const isModalOpen = useCallback((id: string) => {
-    return modals.some((modal: ModalConfig) => modal.id === id);
-  }, [modals]);
+  const isModalOpen = useCallback(
+    (id: string) => {
+      return modals.some((modal: ModalConfig) => modal.id === id);
+    },
+    [modals],
+  );
 
   // Обработка нажатия ESC
   useEffect(() => {
@@ -145,8 +153,8 @@ export const ModalsProvider: FC<ModalsProviderProps> = ({
     if (!containerRef.current) return null;
 
     return modals.map((modal: ModalConfig, index: number) => {
-      const zIndex = modal.options?.alwaysOnTop 
-        ? baseZIndex + 10000 
+      const zIndex = modal.options?.alwaysOnTop
+        ? baseZIndex + 10000
         : (modal.options?.zIndex || baseZIndex) + index;
 
       return createPortal(
@@ -156,26 +164,29 @@ export const ModalsProvider: FC<ModalsProviderProps> = ({
           zIndex={zIndex}
           onClose={() => closeModal(modal.id)}
         />,
-        containerRef.current!
+        containerRef.current!,
       );
     });
   }, [modals, baseZIndex, closeModal]);
 
-  const publicApi = useMemo(() => ({
-    openModal,
-    closeModal,
-    closeLastOpenedModal,
-    closeAllModals,
-    getOpenModals,
-    isModalOpen,
-  }), [
-    openModal,
-    closeModal,
-    closeLastOpenedModal,
-    closeAllModals,
-    getOpenModals,
-    isModalOpen,
-  ]);
+  const publicApi = useMemo(
+    () => ({
+      openModal,
+      closeModal,
+      closeLastOpenedModal,
+      closeAllModals,
+      getOpenModals,
+      isModalOpen,
+    }),
+    [
+      openModal,
+      closeModal,
+      closeLastOpenedModal,
+      closeAllModals,
+      getOpenModals,
+      isModalOpen,
+    ],
+  );
 
   return (
     <ModalsContext.Provider value={publicApi}>
@@ -193,11 +204,17 @@ type ModalWrapperProps = {
 };
 
 const ModalWrapper: FC<ModalWrapperProps> = ({ modal, zIndex, onClose }) => {
-  const handleOverlayClick = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
-    if (event.target === event.currentTarget && modal.options?.closeOnOverlayClick) {
-      onClose();
-    }
-  }, [modal.options?.closeOnOverlayClick, onClose]);
+  const handleOverlayClick = useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) => {
+      if (
+        event.target === event.currentTarget &&
+        modal.options?.closeOnOverlayClick
+      ) {
+        onClose();
+      }
+    },
+    [modal.options?.closeOnOverlayClick, onClose],
+  );
 
   return (
     <div

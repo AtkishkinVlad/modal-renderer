@@ -3,7 +3,9 @@ import { ModalsProvider, useModals } from '@atkvs/modal-renderer';
 import React from 'react';
 
 // Модалка с формой
-const FormModal: React.FC<{ onSubmit: (data: { name: string; email: string }) => void }> = ({ onSubmit }) => {
+const FormModal: React.FC<{
+  onSubmit: (data: { name: string; email: string }) => void;
+}> = ({ onSubmit }) => {
   const { closeModal } = useModals();
   const [formData, setFormData] = React.useState({ name: '', email: '' });
 
@@ -16,9 +18,19 @@ const FormModal: React.FC<{ onSubmit: (data: { name: string; email: string }) =>
   return (
     <div style={{ padding: '20px', maxWidth: '500px' }}>
       <h2 style={{ marginTop: 0 }}>Форма в модалке</h2>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+      <form
+        onSubmit={handleSubmit}
+        style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}
+      >
         <div>
-          <label htmlFor="name" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
+          <label
+            htmlFor="name"
+            style={{
+              display: 'block',
+              marginBottom: '5px',
+              fontWeight: 'bold',
+            }}
+          >
             Имя:
           </label>
           <input
@@ -37,14 +49,23 @@ const FormModal: React.FC<{ onSubmit: (data: { name: string; email: string }) =>
           />
         </div>
         <div>
-          <label htmlFor="email" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
+          <label
+            htmlFor="email"
+            style={{
+              display: 'block',
+              marginBottom: '5px',
+              fontWeight: 'bold',
+            }}
+          >
             Email:
           </label>
           <input
             id="email"
             type="email"
             value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
             required
             style={{
               width: '100%',
@@ -55,8 +76,10 @@ const FormModal: React.FC<{ onSubmit: (data: { name: string; email: string }) =>
             }}
           />
         </div>
-        <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
-          <button 
+        <div
+          style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}
+        >
+          <button
             type="button"
             onClick={() => closeModal('form-modal')}
             style={{
@@ -70,7 +93,7 @@ const FormModal: React.FC<{ onSubmit: (data: { name: string; email: string }) =>
           >
             Отмена
           </button>
-          <button 
+          <button
             type="submit"
             style={{
               padding: '8px 16px',
@@ -92,7 +115,10 @@ const FormModal: React.FC<{ onSubmit: (data: { name: string; email: string }) =>
 // Компонент для демонстрации
 const FormModalDemo: React.FC = () => {
   const { openModal } = useModals();
-  const [submittedData, setSubmittedData] = React.useState<{ name: string; email: string } | null>(null);
+  const [submittedData, setSubmittedData] = React.useState<{
+    name: string;
+    email: string;
+  } | null>(null);
 
   const handleOpenFormModal = () => {
     openModal({
@@ -110,10 +136,13 @@ const FormModalDemo: React.FC = () => {
   return (
     <div>
       <h3>Демонстрация модалки с формой</h3>
-      <p>Эта модалка содержит форму с валидацией и не закрывается при клике вне области.</p>
-      
+      <p>
+        Эта модалка содержит форму с валидацией и не закрывается при клике вне
+        области.
+      </p>
+
       <div style={{ marginBottom: '20px' }}>
-        <button 
+        <button
           onClick={handleOpenFormModal}
           style={{
             padding: '10px 20px',
@@ -127,15 +156,17 @@ const FormModalDemo: React.FC = () => {
           Открыть форму
         </button>
       </div>
-      
+
       {submittedData && (
-        <div style={{ 
-          padding: '15px', 
-          backgroundColor: '#d4edda', 
-          border: '1px solid #c3e6cb',
-          borderRadius: '4px',
-          marginTop: '20px'
-        }}>
+        <div
+          style={{
+            padding: '15px',
+            backgroundColor: '#d4edda',
+            border: '1px solid #c3e6cb',
+            borderRadius: '4px',
+            marginTop: '20px',
+          }}
+        >
           <h4 style={{ marginTop: 0, color: '#155724' }}>Данные формы:</h4>
           <pre style={{ margin: 0, fontSize: '14px' }}>
             {JSON.stringify(submittedData, null, 2)}
@@ -153,7 +184,8 @@ const meta: Meta<typeof FormModalDemo> = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'Модалка с формой ввода данных. Демонстрирует работу с формами внутри модальных окон.',
+        component:
+          'Модалка с формой ввода данных. Демонстрирует работу с формами внутри модальных окон.',
       },
     },
   },
@@ -182,7 +214,7 @@ const FormModalValidationDemo: React.FC = () => {
     openModal({
       id: 'form-modal-validation',
       component: (
-        <FormModal 
+        <FormModal
           onSubmit={(data) => {
             const newErrors = [];
             if (!data.name || data.name.length < 2) {
@@ -195,7 +227,7 @@ const FormModalValidationDemo: React.FC = () => {
             if (newErrors.length === 0) {
               console.log('Форма валидна:', data);
             }
-          }} 
+          }}
         />
       ),
       options: {
@@ -210,8 +242,8 @@ const FormModalValidationDemo: React.FC = () => {
     <div>
       <h3>Модалка с валидацией</h3>
       <p>Попробуйте отправить форму с некорректными данными.</p>
-      
-      <button 
+
+      <button
         onClick={handleOpenFormModal}
         style={{
           padding: '10px 20px',
@@ -224,15 +256,17 @@ const FormModalValidationDemo: React.FC = () => {
       >
         Открыть форму с валидацией
       </button>
-      
+
       {errors.length > 0 && (
-        <div style={{ 
-          padding: '15px', 
-          backgroundColor: '#f8d7da', 
-          border: '1px solid #f5c6cb',
-          borderRadius: '4px',
-          marginTop: '20px'
-        }}>
+        <div
+          style={{
+            padding: '15px',
+            backgroundColor: '#f8d7da',
+            border: '1px solid #f5c6cb',
+            borderRadius: '4px',
+            marginTop: '20px',
+          }}
+        >
           <h4 style={{ marginTop: 0, color: '#721c24' }}>Ошибки валидации:</h4>
           <ul style={{ margin: 0, color: '#721c24' }}>
             {errors.map((error, index) => (

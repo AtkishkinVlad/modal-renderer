@@ -7,11 +7,21 @@ export class SimpleModalPage extends BaseStoryPage {
   }
 
   // Специфичные локаторы для Simple Modal
-  private readonly openModalButton = this.page.getByRole('button', { name: 'Открыть модалку' });
-  private readonly openAnotherModalButton = this.page.getByRole('button', { name: 'Open Another Simple Modal' });
-  private readonly closeLastModalButton = this.page.getByRole('button', { name: 'Close Last Modal' });
-  private readonly closeAllModalsButton = this.page.getByRole('button', { name: 'Закрыть все' });
-  private readonly modalCount = this.page.locator('[data-testid="modal-count"]');
+  private readonly openModalButton = this.page.getByRole('button', {
+    name: 'Открыть модалку',
+  });
+  private readonly openAnotherModalButton = this.page.getByRole('button', {
+    name: 'Open Another Simple Modal',
+  });
+  private readonly closeLastModalButton = this.page.getByRole('button', {
+    name: 'Close Last Modal',
+  });
+  private readonly closeAllModalsButton = this.page.getByRole('button', {
+    name: 'Закрыть все',
+  });
+  private readonly modalCount = this.page.locator(
+    '[data-testid="modal-count"]',
+  );
 
   // Навигация к историям
   async navigateToDefaultStory() {
@@ -19,7 +29,9 @@ export class SimpleModalPage extends BaseStoryPage {
   }
 
   async navigateToCustomOptionsStory() {
-    await this.navigateToStory('modal-renderer-simple-modal--with-custom-options');
+    await this.navigateToStory(
+      'modal-renderer-simple-modal--with-custom-options',
+    );
   }
 
   // Взаимодействие с модалками
@@ -45,7 +57,10 @@ export class SimpleModalPage extends BaseStoryPage {
 
   // Проверки состояния
   async expectModalCountToBe(count: number) {
-    await this.expectElementToHaveText('[data-testid="modal-count"]', count.toString());
+    await this.expectElementToHaveText(
+      '[data-testid="modal-count"]',
+      count.toString(),
+    );
   }
 
   async expectModalCountToContain(text: string) {
@@ -76,11 +91,11 @@ export class SimpleModalPage extends BaseStoryPage {
   async testCustomOptionsModal() {
     await this.openModal();
     await this.waitForModalToBeVisible();
-    
+
     // Проверяем, что модалка не закрывается при клике вне области
     await this.clickModalOverlay();
     await this.waitForModalToBeVisible();
-    
+
     // Закрываем через кнопку
     await this.closeModal();
     await this.waitForModalToBeHidden();
@@ -89,7 +104,7 @@ export class SimpleModalPage extends BaseStoryPage {
   async testKeyboardNavigation() {
     await this.openModal();
     await this.waitForModalToBeVisible();
-    
+
     // Нажимаем Escape для закрытия
     await this.pressKey('Escape');
     await this.waitForModalToBeHidden();
@@ -100,10 +115,10 @@ export class SimpleModalPage extends BaseStoryPage {
     await this.openModal();
     await this.openModal();
     await this.openModal();
-    
+
     // Проверяем, что все модалки открыты
     await this.expectMultipleModalsOpen(3);
-    
+
     // Закрываем все модалки
     await this.closeAllModals();
     await this.expectModalCountToBe(0);

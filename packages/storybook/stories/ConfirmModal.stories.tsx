@@ -1,12 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { ModalsProvider, useModals, useCreateModal } from '@atkvs/modal-renderer';
+import {
+  ModalsProvider,
+  useModals,
+  useCreateModal,
+} from '@atkvs/modal-renderer';
 import React from 'react';
 
 // Модалка подтверждения
-const ConfirmModal: React.FC<{ 
-  message: string; 
-  onConfirm: () => void; 
-  onCancel: () => void; 
+const ConfirmModal: React.FC<{
+  message: string;
+  onConfirm: () => void;
+  onCancel: () => void;
   type?: 'danger' | 'warning' | 'info';
 }> = ({ message, onConfirm, onCancel, type = 'info' }) => {
   const getButtonStyle = (variant: 'primary' | 'secondary') => {
@@ -35,21 +39,17 @@ const ConfirmModal: React.FC<{
 
   return (
     <div style={{ padding: '20px', maxWidth: '400px' }}>
-      <h2 style={{ marginTop: 0, color: type === 'danger' ? '#dc3545' : '#333' }}>
+      <h2
+        style={{ marginTop: 0, color: type === 'danger' ? '#dc3545' : '#333' }}
+      >
         {type === 'danger' ? '⚠️ Подтверждение' : '❓ Подтверждение'}
       </h2>
       <p style={{ marginBottom: '20px', lineHeight: '1.5' }}>{message}</p>
       <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
-        <button 
-          onClick={onCancel}
-          style={getButtonStyle('secondary')}
-        >
+        <button onClick={onCancel} style={getButtonStyle('secondary')}>
           Отмена
         </button>
-        <button 
-          onClick={onConfirm}
-          style={getButtonStyle('primary')}
-        >
+        <button onClick={onConfirm} style={getButtonStyle('primary')}>
           {type === 'danger' ? 'Да, удалить' : 'Подтвердить'}
         </button>
       </div>
@@ -146,10 +146,19 @@ const ConfirmModalDemo: React.FC = () => {
   return (
     <div>
       <h3>Демонстрация модалок подтверждения</h3>
-      <p>Различные типы модалок подтверждения для разных сценариев использования.</p>
-      
-      <div style={{ display: 'flex', gap: '10px', marginBottom: '20px', flexWrap: 'wrap' }}>
-        <button 
+      <p>
+        Различные типы модалок подтверждения для разных сценариев использования.
+      </p>
+
+      <div
+        style={{
+          display: 'flex',
+          gap: '10px',
+          marginBottom: '20px',
+          flexWrap: 'wrap',
+        }}
+      >
+        <button
           onClick={handleDeleteItem}
           style={{
             padding: '10px 20px',
@@ -162,8 +171,8 @@ const ConfirmModalDemo: React.FC = () => {
         >
           🗑️ Удалить элемент
         </button>
-        
-        <button 
+
+        <button
           onClick={handleSaveChanges}
           style={{
             padding: '10px 20px',
@@ -176,8 +185,8 @@ const ConfirmModalDemo: React.FC = () => {
         >
           💾 Сохранить изменения
         </button>
-        
-        <button 
+
+        <button
           onClick={handleWarningAction}
           style={{
             padding: '10px 20px',
@@ -191,16 +200,20 @@ const ConfirmModalDemo: React.FC = () => {
           ⚠️ Предупреждение
         </button>
       </div>
-      
+
       {lastAction && (
-        <div style={{ 
-          padding: '15px', 
-          backgroundColor: '#d1ecf1', 
-          border: '1px solid #bee5eb',
-          borderRadius: '4px',
-          marginTop: '20px'
-        }}>
-          <h4 style={{ marginTop: 0, color: '#0c5460' }}>Последнее действие:</h4>
+        <div
+          style={{
+            padding: '15px',
+            backgroundColor: '#d1ecf1',
+            border: '1px solid #bee5eb',
+            borderRadius: '4px',
+            marginTop: '20px',
+          }}
+        >
+          <h4 style={{ marginTop: 0, color: '#0c5460' }}>
+            Последнее действие:
+          </h4>
           <p style={{ margin: 0, color: '#0c5460' }}>{lastAction}</p>
         </div>
       )}
@@ -215,7 +228,8 @@ const meta: Meta<typeof ConfirmModalDemo> = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'Модалки подтверждения для различных действий. Демонстрирует использование разных типов подтверждений.',
+        component:
+          'Модалки подтверждения для различных действий. Демонстрирует использование разных типов подтверждений.',
       },
     },
   },
@@ -247,7 +261,7 @@ const ConfirmModalDangerDemo: React.FC = () => {
           message={`Удалить "${itemName}"? Это действие нельзя отменить.`}
           type="danger"
           onConfirm={() => {
-            setDeletedItems(prev => [...prev, itemName]);
+            setDeletedItems((prev) => [...prev, itemName]);
             closeModal();
           }}
           onCancel={() => {
@@ -269,24 +283,36 @@ const ConfirmModalDangerDemo: React.FC = () => {
     <div>
       <h3>Удаление элементов</h3>
       <p>Выберите элемент для удаления:</p>
-      
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '20px' }}>
+
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '10px',
+          marginBottom: '20px',
+        }}
+      >
         {items.map((item) => (
-          <div key={item} style={{ 
-            display: 'flex', 
-            justifyContent: 'space-between', 
-            alignItems: 'center',
-            padding: '10px',
-            border: '1px solid #ddd',
-            borderRadius: '4px'
-          }}>
+          <div
+            key={item}
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              padding: '10px',
+              border: '1px solid #ddd',
+              borderRadius: '4px',
+            }}
+          >
             <span>{item}</span>
-            <button 
+            <button
               onClick={() => handleDeleteItem(item)}
               disabled={deletedItems.includes(item)}
               style={{
                 padding: '5px 10px',
-                backgroundColor: deletedItems.includes(item) ? '#6c757d' : '#dc3545',
+                backgroundColor: deletedItems.includes(item)
+                  ? '#6c757d'
+                  : '#dc3545',
                 color: 'white',
                 border: 'none',
                 borderRadius: '4px',
@@ -299,15 +325,19 @@ const ConfirmModalDangerDemo: React.FC = () => {
           </div>
         ))}
       </div>
-      
+
       {deletedItems.length > 0 && (
-        <div style={{ 
-          padding: '15px', 
-          backgroundColor: '#f8d7da', 
-          border: '1px solid #f5c6cb',
-          borderRadius: '4px'
-        }}>
-          <h4 style={{ marginTop: 0, color: '#721c24' }}>Удаленные элементы:</h4>
+        <div
+          style={{
+            padding: '15px',
+            backgroundColor: '#f8d7da',
+            border: '1px solid #f5c6cb',
+            borderRadius: '4px',
+          }}
+        >
+          <h4 style={{ marginTop: 0, color: '#721c24' }}>
+            Удаленные элементы:
+          </h4>
           <ul style={{ margin: 0, color: '#721c24' }}>
             {deletedItems.map((item, index) => (
               <li key={index}>{item}</li>

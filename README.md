@@ -36,7 +36,7 @@ import { useModals, useModal } from '@atkvs/modal-renderer';
 
 function MyComponent() {
   const { openModal, closeModal } = useModals();
-  
+
   const handleOpenModal = () => {
     openModal({
       id: 'my-modal',
@@ -49,11 +49,7 @@ function MyComponent() {
     });
   };
 
-  return (
-    <button onClick={handleOpenModal}>
-      Открыть модалку
-    </button>
-  );
+  return <button onClick={handleOpenModal}>Открыть модалку</button>;
 }
 ```
 
@@ -78,12 +74,12 @@ interface ModalsProviderProps {
 
 ```tsx
 const {
-  openModal,           // Открыть модалку
-  closeModal,          // Закрыть модалку по ID
+  openModal, // Открыть модалку
+  closeModal, // Закрыть модалку по ID
   closeLastOpenedModal, // Закрыть последнюю модалку
-  closeAllModals,      // Закрыть все модалки
-  getOpenModals,       // Получить список открытых модалок
-  isModalOpen,         // Проверить, открыта ли модалка
+  closeAllModals, // Закрыть все модалки
+  getOpenModals, // Получить список открытых модалок
+  isModalOpen, // Проверить, открыта ли модалка
 } = useModals();
 ```
 
@@ -103,7 +99,7 @@ const { open, close, isOpen } = useModal('modal-id');
 const createModal = useCreateModal();
 const modalId = createModal({
   component: <MyComponent />,
-  options: { animated: true }
+  options: { animated: true },
 });
 ```
 

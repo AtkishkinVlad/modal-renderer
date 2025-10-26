@@ -6,6 +6,9 @@ commit-msg:
 
 pre-commit:
   commands:
-    format:
-      tags: format files
+    lint:
+      tags: lint files
       run: npm run lint
+    format-check:
+      tags: check formatting
+      run: npm run format:check

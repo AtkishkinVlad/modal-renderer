@@ -9,9 +9,12 @@ export const useModals = () => {
 export const useModal = (id: string) => {
   const { openModal, closeModal, isModalOpen } = useModals();
 
-  const open = useCallback((modal: Omit<ModalConfig, 'id'>) => {
-    return openModal({ ...modal, id });
-  }, [openModal, id]);
+  const open = useCallback(
+    (modal: Omit<ModalConfig, 'id'>) => {
+      return openModal({ ...modal, id });
+    },
+    [openModal, id],
+  );
 
   const close = useCallback(() => {
     closeModal(id);
@@ -30,11 +33,14 @@ export const useModal = (id: string) => {
 export const useCreateModal = () => {
   const { openModal } = useModals();
 
-  const createModal = useCallback((modal: Omit<ModalConfig, 'id'>) => {
-    const id = `modal-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-    const closeModal = openModal({ ...modal, id });
-    return { id, closeModal };
-  }, [openModal]);
+  const createModal = useCallback(
+    (modal: Omit<ModalConfig, 'id'>) => {
+      const id = `modal-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      const closeModal = openModal({ ...modal, id });
+      return { id, closeModal };
+    },
+    [openModal],
+  );
 
   return createModal;
 };

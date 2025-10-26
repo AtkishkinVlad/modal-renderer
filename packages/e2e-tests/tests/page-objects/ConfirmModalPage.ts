@@ -71,13 +71,17 @@ export class ConfirmModalPage extends BaseStoryPage {
   }
 
   async expectButtonToBeDisabled(buttonText: string) {
-    await this.expectElementToBeVisible(`button:has-text("${buttonText}"):disabled`);
+    await this.expectElementToBeVisible(
+      `button:has-text("${buttonText}"):disabled`,
+    );
   }
 
   async testDeleteConfirmation() {
     await this.clickDeleteItem();
-    await this.expectConfirmModalToBeVisible('Вы уверены, что хотите удалить этот элемент?');
-    
+    await this.expectConfirmModalToBeVisible(
+      'Вы уверены, что хотите удалить этот элемент?',
+    );
+
     // Отменяем удаление
     await this.cancelAction();
     await this.expectConfirmModalToBeHidden();
@@ -87,7 +91,7 @@ export class ConfirmModalPage extends BaseStoryPage {
   async testSaveConfirmation() {
     await this.clickSaveChanges();
     await this.expectConfirmModalToBeVisible('Сохранить внесенные изменения?');
-    
+
     // Подтверждаем сохранение
     await this.confirmAction();
     await this.expectConfirmModalToBeHidden();
@@ -98,14 +102,14 @@ export class ConfirmModalPage extends BaseStoryPage {
     // Пытаемся удалить первый элемент
     await this.clickButton('button:has-text("Удалить"):first-of-type');
     await this.expectConfirmModalToBeVisible('Удалить "Важный документ"?');
-    
+
     // Подтверждаем удаление
     await this.confirmDelete();
     await this.expectConfirmModalToBeHidden();
-    
+
     // Проверяем, что элемент появился в списке удаленных
     await this.expectDeletedItemsToBeVisible(['Важный документ']);
-    
+
     // Проверяем, что кнопка стала неактивной
     await this.expectButtonToBeDisabled('Удален');
   }

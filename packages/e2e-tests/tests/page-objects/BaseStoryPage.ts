@@ -8,15 +8,33 @@ export class BaseStoryPage {
   }
 
   // Базовые локаторы
-  protected get storyTitle(): Locator { return this.page.locator('h3').first(); }
-  protected get storyDescription(): Locator { return this.page.locator('p').first(); }
-  protected get modalOverlay(): Locator { return this.page.locator('.modal-overlay'); }
-  protected get modalContent(): Locator { return this.page.locator('.modal-content'); }
-  protected get modalCloseButton(): Locator { return this.page.getByRole('button', { name: 'Закрыть' }); }
-  protected get modalCancelButton(): Locator { return this.page.getByRole('button', { name: 'Отмена' }); }
-  protected get modalConfirmButton(): Locator { return this.page.getByRole('button', { name: 'Подтвердить' }); }
-  protected get modalSubmitButton(): Locator { return this.page.getByRole('button', { name: 'Сохранить' }); }
-  protected get modalDeleteButton(): Locator { return this.page.getByRole('button', { name: 'Да, удалить' }); }
+  protected get storyTitle(): Locator {
+    return this.page.locator('h3').first();
+  }
+  protected get storyDescription(): Locator {
+    return this.page.locator('p').first();
+  }
+  protected get modalOverlay(): Locator {
+    return this.page.locator('.modal-overlay');
+  }
+  protected get modalContent(): Locator {
+    return this.page.locator('.modal-content');
+  }
+  protected get modalCloseButton(): Locator {
+    return this.page.getByRole('button', { name: 'Закрыть' });
+  }
+  protected get modalCancelButton(): Locator {
+    return this.page.getByRole('button', { name: 'Отмена' });
+  }
+  protected get modalConfirmButton(): Locator {
+    return this.page.getByRole('button', { name: 'Подтвердить' });
+  }
+  protected get modalSubmitButton(): Locator {
+    return this.page.getByRole('button', { name: 'Сохранить' });
+  }
+  protected get modalDeleteButton(): Locator {
+    return this.page.getByRole('button', { name: 'Да, удалить' });
+  }
 
   // Навигация
   async navigateToStory(storyId: string) {
@@ -135,11 +153,15 @@ export class BaseStoryPage {
 
   // Проверки состояния
   async expectButtonToBeEnabled(buttonText: string) {
-    await expect(this.page.getByRole('button', { name: buttonText })).toBeEnabled();
+    await expect(
+      this.page.getByRole('button', { name: buttonText }),
+    ).toBeEnabled();
   }
 
   async expectButtonToBeDisabled(buttonText: string) {
-    await expect(this.page.getByRole('button', { name: buttonText })).toBeDisabled();
+    await expect(
+      this.page.getByRole('button', { name: buttonText }),
+    ).toBeDisabled();
   }
 
   async expectInputToHaveValue(selector: string, value: string) {
@@ -147,7 +169,10 @@ export class BaseStoryPage {
   }
 
   async expectInputToBeInvalid(selector: string) {
-    await expect(this.page.locator(selector)).toHaveAttribute('aria-invalid', 'true');
+    await expect(this.page.locator(selector)).toHaveAttribute(
+      'aria-invalid',
+      'true',
+    );
   }
 
   async expectInputToBeValid(selector: string) {

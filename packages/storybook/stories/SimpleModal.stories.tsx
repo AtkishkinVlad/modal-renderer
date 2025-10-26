@@ -11,7 +11,7 @@ const SimpleModal: React.FC = () => {
       <h2 style={{ marginTop: 0 }}>Простая модалка</h2>
       <p>Это пример простой модалки с базовой функциональностью.</p>
       <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
-        <button 
+        <button
           onClick={() => closeModal('simple-modal')}
           style={{
             padding: '8px 16px',
@@ -57,7 +57,7 @@ const ModalDemo: React.FC = () => {
     <div>
       <h3>Демонстрация модалок</h3>
       <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
-        <button 
+        <button
           onClick={handleOpenModal}
           style={{
             padding: '10px 20px',
@@ -70,8 +70,8 @@ const ModalDemo: React.FC = () => {
         >
           Открыть модалку
         </button>
-        
-        <button 
+
+        <button
           onClick={closeAllModals}
           disabled={openModals.length === 0}
           style={{
@@ -87,17 +87,20 @@ const ModalDemo: React.FC = () => {
           Закрыть все ({openModals.length})
         </button>
       </div>
-      
-      <div style={{ 
-        padding: '10px', 
-        backgroundColor: '#f8f9fa', 
-        borderRadius: '4px',
-        fontSize: '14px'
-      }}>
+
+      <div
+        style={{
+          padding: '10px',
+          backgroundColor: '#f8f9fa',
+          borderRadius: '4px',
+          fontSize: '14px',
+        }}
+      >
         <strong>Статус:</strong> Открыто модалок: {openModals.length}
         {openModals.length > 0 && (
           <div style={{ marginTop: '5px' }}>
-            <strong>ID модалок:</strong> {openModals.map(m => m.id).join(', ')}
+            <strong>ID модалок:</strong>{' '}
+            {openModals.map((m) => m.id).join(', ')}
           </div>
         )}
       </div>
@@ -112,7 +115,8 @@ const meta: Meta<typeof ModalDemo> = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'Простая демонстрация работы с модальными окнами. Модалка автоматически закроется через 5 секунд.',
+        component:
+          'Простая демонстрация работы с модальными окнами. Модалка автоматически закроется через 5 секунд.',
       },
     },
   },
@@ -154,7 +158,7 @@ const SimpleModalCustomDemo: React.FC = () => {
     <div>
       <h3>Модалка с кастомными опциями</h3>
       <p>Эта модалка не закрывается при клике вне области.</p>
-      <button 
+      <button
         onClick={handleOpenModal}
         style={{
           padding: '10px 20px',

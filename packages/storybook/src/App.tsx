@@ -1,5 +1,9 @@
 import React from 'react';
-import { ModalsProvider, useModals, useCreateModal } from '@atkvs/modal-renderer';
+import {
+  ModalsProvider,
+  useModals,
+  useCreateModal,
+} from '@atkvs/modal-renderer';
 import '@atkvs/modal-renderer/styles';
 import './App.css';
 
@@ -12,7 +16,7 @@ const SimpleModal: React.FC = () => {
       <h2>Простая модалка</h2>
       <p>Это пример простой модалки с базовой функциональностью.</p>
       <div className="modal-actions">
-        <button 
+        <button
           className="btn btn-primary"
           onClick={() => closeModal('simple-modal')}
         >
@@ -24,7 +28,9 @@ const SimpleModal: React.FC = () => {
 };
 
 // Пример модалки с формой
-const FormModal: React.FC<{ onSubmit: (data: unknown) => void }> = ({ onSubmit }) => {
+const FormModal: React.FC<{ onSubmit: (data: unknown) => void }> = ({
+  onSubmit,
+}) => {
   const { closeModal } = useModals();
   const [formData, setFormData] = React.useState({ name: '', email: '' });
 
@@ -54,7 +60,9 @@ const FormModal: React.FC<{ onSubmit: (data: unknown) => void }> = ({ onSubmit }
             id="email"
             type="email"
             value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
             required
           />
         </div>
@@ -62,8 +70,8 @@ const FormModal: React.FC<{ onSubmit: (data: unknown) => void }> = ({ onSubmit }
           <button type="submit" className="btn btn-primary">
             Сохранить
           </button>
-          <button 
-            type="button" 
+          <button
+            type="button"
             className="btn btn-secondary"
             onClick={() => closeModal('form-modal')}
           >
@@ -76,10 +84,10 @@ const FormModal: React.FC<{ onSubmit: (data: unknown) => void }> = ({ onSubmit }
 };
 
 // Пример модалки с подтверждением
-const ConfirmModal: React.FC<{ 
-  message: string; 
-  onConfirm: () => void; 
-  onCancel: () => void; 
+const ConfirmModal: React.FC<{
+  message: string;
+  onConfirm: () => void;
+  onCancel: () => void;
 }> = ({ message, onConfirm, onCancel }) => {
   return (
     <div className="modal-content">
@@ -120,45 +128,51 @@ const SettingsModal: React.FC = () => {
           <select
             id="theme"
             value={settings.theme}
-            onChange={(e) => setSettings({ ...settings, theme: e.target.value })}
+            onChange={(e) =>
+              setSettings({ ...settings, theme: e.target.value })
+            }
           >
             <option value="light">Светлая</option>
             <option value="dark">Темная</option>
             <option value="auto">Авто</option>
           </select>
         </div>
-        
+
         <div className="form-group">
           <label htmlFor="language">Язык:</label>
           <select
             id="language"
             value={settings.language}
-            onChange={(e) => setSettings({ ...settings, language: e.target.value })}
+            onChange={(e) =>
+              setSettings({ ...settings, language: e.target.value })
+            }
           >
             <option value="ru">Русский</option>
             <option value="en">English</option>
             <option value="es">Español</option>
           </select>
         </div>
-        
+
         <div className="form-group">
           <label className="checkbox-label">
             <input
               type="checkbox"
               checked={settings.notifications}
-              onChange={(e) => setSettings({ ...settings, notifications: e.target.checked })}
+              onChange={(e) =>
+                setSettings({ ...settings, notifications: e.target.checked })
+              }
             />
             Включить уведомления
           </label>
         </div>
       </div>
-      
+
       <div className="modal-actions">
         <button onClick={handleSave} className="btn btn-primary">
           Сохранить
         </button>
-        <button 
-          onClick={() => closeModal('settings-modal')} 
+        <button
+          onClick={() => closeModal('settings-modal')}
           className="btn btn-secondary"
         >
           Отмена
@@ -245,49 +259,46 @@ const App: React.FC = () => {
         <h1>Modal Renderer v2.0.0 - Примеры использования</h1>
         <p>Демонстрация возможностей библиотеки управления модальными окнами</p>
       </header>
-      
+
       <main className="app-main">
         <section className="examples-section">
           <h2>Примеры модалок</h2>
-          
+
           <div className="examples-grid">
             <div className="example-card">
               <h3>Простая модалка</h3>
               <p>Базовая модалка с кнопкой закрытия</p>
-              <button 
+              <button
                 className="btn btn-primary"
                 onClick={handleOpenSimpleModal}
               >
                 Открыть простую модалку
               </button>
             </div>
-            
+
             <div className="example-card">
               <h3>Модалка с формой</h3>
               <p>Модалка с формой ввода данных</p>
-              <button 
-                className="btn btn-primary"
-                onClick={handleOpenFormModal}
-              >
+              <button className="btn btn-primary" onClick={handleOpenFormModal}>
                 Открыть модалку с формой
               </button>
             </div>
-            
+
             <div className="example-card">
               <h3>Модалка настроек</h3>
               <p>Модалка с различными элементами управления</p>
-              <button 
+              <button
                 className="btn btn-primary"
                 onClick={handleOpenSettingsModal}
               >
                 Открыть настройки
               </button>
             </div>
-            
+
             <div className="example-card">
               <h3>Модалка подтверждения</h3>
               <p>Модалка с подтверждением действия</p>
-              <button 
+              <button
                 className="btn btn-danger"
                 onClick={handleOpenConfirmModal}
               >
@@ -296,11 +307,11 @@ const App: React.FC = () => {
             </div>
           </div>
         </section>
-        
+
         <section className="controls-section">
           <h2>Управление модалками</h2>
           <div className="controls">
-            <button 
+            <button
               className="btn btn-secondary"
               onClick={closeAllModals}
               disabled={openModals.length === 0}
@@ -309,11 +320,13 @@ const App: React.FC = () => {
             </button>
           </div>
         </section>
-        
+
         <section className="status-section">
           <h2>Статус модалок</h2>
           <div className="status-info">
-            <p><strong>Открыто модалок:</strong> {openModals.length}</p>
+            <p>
+              <strong>Открыто модалок:</strong> {openModals.length}
+            </p>
             {openModals.length > 0 && (
               <div className="open-modals">
                 <h4>Открытые модалки:</h4>
@@ -321,7 +334,7 @@ const App: React.FC = () => {
                   {openModals.map((modal) => (
                     <li key={modal.id}>
                       <code>{modal.id}</code>
-                      <button 
+                      <button
                         className="btn btn-small btn-secondary"
                         onClick={() => closeModal(modal.id)}
                       >
@@ -335,9 +348,12 @@ const App: React.FC = () => {
           </div>
         </section>
       </main>
-      
+
       <footer className="app-footer">
-        <p>Modal Renderer v2.0.0 - Современная библиотека для управления модальными окнами в React</p>
+        <p>
+          Modal Renderer v2.0.0 - Современная библиотека для управления
+          модальными окнами в React
+        </p>
       </footer>
     </div>
   );

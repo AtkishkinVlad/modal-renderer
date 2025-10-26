@@ -13,11 +13,15 @@
     "install:browsers": "playwright install",
     "build": "echo 'E2E tests package - no build needed'",
     "lint": "echo 'E2E tests package - no lint needed'",
+    "lint:fix": "echo 'E2E tests package - no lint needed'",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "clean": "rm -rf test-results playwright-report node_modules"
   },
   "devDependencies": {
     "@playwright/test": "^1.40.0",
     "@types/node": "^22.5.1",
+    "prettier": "^3.6.2",
     "typescript": "^5.5.3"
   }
 }
