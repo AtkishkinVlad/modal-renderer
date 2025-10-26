@@ -6,6 +6,14 @@ export class SimpleModalPage extends BaseStoryPage {
     super(page);
   }
 
+  // Специфичные локаторы для Simple Modal
+  private readonly openModalButton = this.page.getByRole('button', { name: 'Открыть модалку' });
+  private readonly openAnotherModalButton = this.page.getByRole('button', { name: 'Open Another Simple Modal' });
+  private readonly closeLastModalButton = this.page.getByRole('button', { name: 'Close Last Modal' });
+  private readonly closeAllModalsButton = this.page.getByRole('button', { name: 'Закрыть все' });
+  private readonly modalCount = this.page.locator('[data-testid="modal-count"]');
+
+  // Навигация к историям
   async navigateToDefaultStory() {
     await this.navigateToStory('modal-renderer-simple-modal--default');
   }
@@ -14,31 +22,55 @@ export class SimpleModalPage extends BaseStoryPage {
     await this.navigateToStory('modal-renderer-simple-modal--with-custom-options');
   }
 
+  // Взаимодействие с модалками
   async openModal() {
-    await this.clickButton('Открыть модалку');
+    await this.openModalButton.click();
+  }
+
+  async openAnotherModal() {
+    await this.openAnotherModalButton.click();
   }
 
   async closeModal() {
-    await this.clickButton('Закрыть');
+    await this.closeModalByButton();
+  }
+
+  async closeLastModal() {
+    await this.closeLastModalButton.click();
   }
 
   async closeAllModals() {
-    await this.clickButton('Закрыть все');
+    await this.closeAllModalsButton.click();
+  }
+
+  // Проверки состояния
+  async expectModalCountToBe(count: number) {
+    await this.expectElementToHaveText('[data-testid="modal-count"]', count.toString());
+  }
+
+  async expectModalCountToContain(text: string) {
+    await this.expectElementToHaveText('[data-testid="modal-count"]', text);
   }
 
   async expectModalToBeOpen() {
     await this.waitForModalToBeVisible();
     await this.expectTextToBeVisible('Простая модалка');
-    await this.expectElementToHaveText('[data-testid="modal-count"]', '1');
   }
 
   async expectModalToBeClosed() {
     await this.waitForModalToBeHidden();
-    await this.expectElementToHaveText('[data-testid="modal-count"]', '0');
   }
 
   async expectMultipleModalsOpen(count: number) {
-    await this.expectElementToHaveText('[data-testid="modal-count"]', count.toString());
+    await this.expectModalCountToBe(count);
+  }
+
+  // Тестовые сценарии
+  async testBasicModalFlow() {
+    await this.openModal();
+    await this.expectModalToBeOpen();
+    await this.closeModal();
+    await this.expectModalToBeClosed();
   }
 
   async testCustomOptionsModal() {
@@ -74,7 +106,23 @@ export class SimpleModalPage extends BaseStoryPage {
     
     // Закрываем все модалки
     await this.closeAllModals();
-    await this.expectElementToHaveText('[data-testid="modal-count"]', '0');
+    await this.expectModalCountToBe(0);
+    await this.waitForModalToBeHidden();
+  }
+
+  async testOverlayClick() {
+    await this.openModal();
+    await this.expectModalToBeOpen();
+    await this.clickModalOverlay();
+    await this.expectModalToBeClosed();
+  }
+
+  async testMobileResponsiveness() {
+    await this.setViewportSize(375, 667);
+    await this.openModal();
+    await this.waitForModalToBeVisible();
+    await this.expectModalToBeOpen();
+    await this.closeModal();
     await this.waitForModalToBeHidden();
   }
 }

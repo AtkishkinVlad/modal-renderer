@@ -1,4 +1,4 @@
-# Modal Renderer v2.0.0
+# @atkvs/modal-renderer
 
 Современная библиотека для управления модальными окнами в React с поддержкой React Portal, TypeScript и продвинутыми возможностями.
 

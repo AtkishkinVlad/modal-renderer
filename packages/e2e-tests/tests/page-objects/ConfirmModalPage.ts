@@ -43,6 +43,18 @@ export class ConfirmModalPage extends BaseStoryPage {
     await this.expectTextToBeVisible(message);
   }
 
+  async openConfirmModal() {
+    await this.clickDeleteItem();
+  }
+
+  async openDangerOnlyModal() {
+    await this.clickButton('button:has-text("Удалить"):first-of-type');
+  }
+
+  async expectConfirmModalToBeClosed() {
+    await this.expectConfirmModalToBeHidden();
+  }
+
   async expectConfirmModalToBeHidden() {
     await this.waitForModalToBeHidden();
   }

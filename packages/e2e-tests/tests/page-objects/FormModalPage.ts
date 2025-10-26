@@ -43,8 +43,13 @@ export class FormModalPage extends BaseStoryPage {
     await this.expectTextToBeVisible('Форма в модалке');
   }
 
-  async expectFormToBeHidden() {
-    await this.waitForModalToBeHidden();
+  async fillForm(name: string, email: string) {
+    await this.fillNameField(name);
+    await this.fillEmailField(email);
+  }
+
+  async expectFormModalToBeClosed() {
+    await this.expectFormToBeHidden();
   }
 
   async expectFormDataToBeDisplayed(name: string, email: string) {
