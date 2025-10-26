@@ -9,4 +9,10 @@ export default defineConfig({
   skipNodeModulesBundle: true,
   splitting: true,
   minify: true,
+  // Копируем CSS файлы
+  publicDir: 'src',
+  // Включаем CSS в сборку
+  loader: {
+    '.css': 'copy',
+  },
 });

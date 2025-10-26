@@ -1,69 +1,46 @@
 {
-  "name": "@atkvs/modal-renderer",
-  "private": false,
-  "version": "1.3.0",
+  "name": "modal-renderer-monorepo",
+  "private": true,
+  "version": "0.0.1",
   "type": "module",
-  "description": "React hooks for modals-manager",
-  "keywords": [
-    "react",
-    "react-hooks",
-    "modal"
+  "description": "Monorepo for modal-renderer library with examples and tests",
+  "workspaces": [
+    "packages/*"
   ],
-  "main": "dist/index.js",
-  "homepage": "https://github.com/AtkishkinVlad/modal-renderer",
-  "bugs": {
-    "url": "https://github.com/AtkishkinVlad/modal-renderer/issues"
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "lint": "npm run lint --workspaces",
+    "test": "npm run test --workspace=@atkvs/modal-renderer",
+    "test:e2e": "npm run test:e2e --workspace=@atkvs/modal-renderer-e2e-tests",
+    "dev": "npm run dev --workspace=@atkvs/modal-renderer-storybook",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "changeset publish"
   },
-  "license": "MIT",
-  "author": "Atkishkin Vlad <vladatkishkin@vk.com>",
+  "devDependencies": {
+    "@changesets/cli": "^2.27.7",
+    "@commitlint/cli": "^19.4.1",
+    "@commitlint/config-conventional": "^19.4.1",
+    "@eslint/js": "^9.9.0",
+    "@types/node": "^22.5.1",
+    "better-commits": "^1.15.7",
+    "eslint": "^9.38.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.9",
+    "globals": "^15.9.0",
+    "lefthook": "^1.7.14",
+    "prettier": "^3.3.3",
+    "typescript": "^5.5.3",
+    "typescript-eslint": "^8.46.2"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AtkishkinVlad/modal-renderer.git"
   },
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "build": "tsup",
-    "lint": "tsc && eslint .",
-    "format": "prettier --write .",
-    "check-format": "prettier --check .",
-    "ci": "npm run build && npm run check-format && npm run check-exports && npm run lint",
-    "check-exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm",
-    "release": "changeset && changeset version && changeset publish && npm run commit",
-    "publish": "npm publish --access=public",
-    "prepare": "npx lefthook install",
-    "commit": "better-commits"
-  },
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "default": "./dist/index.cjs"
-    }
-  },
-  "devDependencies": {
-    "@arethetypeswrong/cli": "0.15.4",
-    "@changesets/cli": "2.27.7",
-    "@commitlint/cli": "19.4.1",
-    "@commitlint/config-conventional": "19.4.1",
-    "@eslint/js": "9.9.0",
-    "@types/node": "22.5.1",
-    "@types/react": "18.3.3",
-    "@types/react-dom": "18.3.0",
-    "better-commits": "1.15.7",
-    "eslint": "9.9.0",
-    "eslint-plugin-react-hooks": "5.1.0-rc.0",
-    "eslint-plugin-react-refresh": "0.4.9",
-    "globals": "15.9.0",
-    "lefthook": "1.7.14",
-    "prettier": "3.3.3",
-    "tsup": "8.2.4",
-    "typescript": "5.5.3",
-    "typescript-eslint": "8.0.1"
-  },
-  "peerDependencies": {
-    "@types/react": "^17.0.0 || ^18.0.0",
-    "react": "^17.0.0 || ^18.0.0",
-    "react-dom": "^17.0.0 || ^18.0.0"
-  }
+  "author": "Atkishkin Vlad <vladatkishkin@vk.com>",
+  "license": "MIT"
 }

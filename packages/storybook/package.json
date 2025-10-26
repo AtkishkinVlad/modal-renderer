@@ -1,0 +1,35 @@
+{
+  "name": "@atkvs/modal-renderer-storybook",
+  "version": "2.0.0-alpha.1",
+  "private": true,
+  "description": "Storybook stories and examples for modal-renderer library",
+  "type": "module",
+  "scripts": {
+    "dev": "storybook dev -p 6006",
+    "build": "storybook build",
+    "preview": "storybook preview",
+    "lint": "eslint .",
+    "clean": "rm -rf dist node_modules storybook-static"
+  },
+  "dependencies": {
+    "@atkvs/modal-renderer": "file:../modal-renderer",
+    "@vitejs/plugin-react": "^5.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@storybook/addon-docs": "^9.1.15",
+    "@storybook/addon-links": "^9.1.15",
+    "@storybook/react-vite": "^9.1.15",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "eslint": "^9.38.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "eslint-plugin-storybook": "9.1.15",
+    "storybook": "^9.1.15",
+    "typescript": "^5.2.2",
+    "typescript-eslint": "^8.46.2",
+    "vite": "^5.1.4"
+  }
+}
