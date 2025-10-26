@@ -1,9 +1,9 @@
-import { test, expect } from './fixtures/modal-fixtures';
+import { test } from './fixtures/modal-fixtures';
 
-test.describe('Simple Modal Stories', () => {
+test.describe('simple Modal Stories', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
   });
 
   test('should navigate to Simple Modal default story', async ({

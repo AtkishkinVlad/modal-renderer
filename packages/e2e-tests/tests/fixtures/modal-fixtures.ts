@@ -1,4 +1,4 @@
-import { test as base, expect } from '@playwright/test';
+import { test as base, expect, Page } from '@playwright/test';
 import { BaseStoryPage } from '../page-objects/BaseStoryPage';
 import { SimpleModalPage } from '../page-objects/SimpleModalPage';
 import { FormModalPage } from '../page-objects/FormModalPage';
@@ -34,16 +34,17 @@ export const test = base.extend<{
 
 // Утилиты для тестов
 export const testUtils = {
-  async navigateToStorybook(page: any) {
+  async navigateToStorybook(page: Page) {
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
   },
 
-  async expectStoryToLoad(page: any, storyTitle: string) {
-    await expect(page.locator('h3')).toContainText(storyTitle);
+  async waitForStoryToLoad(page: Page, storyTitle: string) {
+    await page.locator('h3').waitFor();
+    await page.locator(`text=${storyTitle}`).waitFor();
   },
 
-  async takeScreenshotOnFailure(page: any, testName: string) {
+  async takeScreenshotOnFailure(page: Page, testName: string) {
     if (test.info().status === 'failed') {
       await page.screenshot({
         path: `test-results/screenshots/${testName}-failed.png`,

@@ -12,8 +12,8 @@
     "test:e2e:report": "playwright show-report",
     "install:browsers": "playwright install",
     "build": "echo 'E2E tests package - no build needed'",
-    "lint": "echo 'E2E tests package - no lint needed'",
-    "lint:fix": "echo 'E2E tests package - no lint needed'",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "clean": "rm -rf test-results playwright-report node_modules"
@@ -21,7 +21,12 @@
   "devDependencies": {
     "@playwright/test": "^1.40.0",
     "@types/node": "^22.5.1",
+    "@typescript-eslint/eslint-plugin": "^8.46.2",
+    "@typescript-eslint/parser": "^8.46.2",
+    "eslint": "^9.38.0",
+    "eslint-plugin-playwright": "^2.2.2",
     "prettier": "^3.6.2",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.3",
+    "typescript-eslint": "^8.46.2"
   }
 }

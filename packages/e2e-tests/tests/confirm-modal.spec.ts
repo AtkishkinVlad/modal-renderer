@@ -1,9 +1,9 @@
-import { test, expect } from './fixtures/modal-fixtures';
+import { test } from './fixtures/modal-fixtures';
 
-test.describe('Confirm Modal Stories', () => {
+test.describe('confirm Modal Stories', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
   });
 
   test('should navigate to Confirm Modal default story', async ({

@@ -39,7 +39,7 @@ export class BaseStoryPage {
   // Навигация
   async navigateToStory(storyId: string) {
     await this.page.goto(`/iframe.html?id=${storyId}&viewMode=story`);
-    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForLoadState('domcontentloaded');
   }
 
   // Проверки видимости
@@ -48,7 +48,7 @@ export class BaseStoryPage {
   }
 
   async expectElementNotToBeVisible(selector: string) {
-    await expect(this.page.locator(selector)).not.toBeVisible();
+    await expect(this.page.locator(selector)).toBeHidden();
   }
 
   async expectElementToHaveText(selector: string, text: string) {
@@ -60,7 +60,7 @@ export class BaseStoryPage {
   }
 
   async expectTextNotToBeVisible(text: string) {
-    await expect(this.page.locator(`text=${text}`)).not.toBeVisible();
+    await expect(this.page.locator(`text=${text}`)).toBeHidden();
   }
 
   async expectStoryTitleToContain(title: string) {
@@ -99,7 +99,7 @@ export class BaseStoryPage {
   }
 
   async waitForModalToBeHidden() {
-    await expect(this.modalOverlay).not.toBeVisible();
+    await expect(this.modalOverlay).toBeHidden();
   }
 
   async expectModalToBeOpen() {
@@ -107,7 +107,7 @@ export class BaseStoryPage {
   }
 
   async expectModalToBeClosed() {
-    await expect(this.modalContent).not.toBeVisible();
+    await expect(this.modalContent).toBeHidden();
   }
 
   async closeModalByButton() {
@@ -140,11 +140,11 @@ export class BaseStoryPage {
   }
 
   async waitForElement(selector: string, timeout = 5000) {
-    await this.page.waitForSelector(selector, { timeout });
+    await this.page.locator(selector).waitFor({ timeout });
   }
 
   async waitForText(text: string, timeout = 5000) {
-    await this.page.waitForSelector(`text=${text}`, { timeout });
+    await this.page.locator(`text=${text}`).waitFor({ timeout });
   }
 
   async takeScreenshot(name: string) {
@@ -178,7 +178,6 @@ export class BaseStoryPage {
   async expectInputToBeValid(selector: string) {
     const element = this.page.locator(selector);
     // Проверяем, что элемент не имеет aria-invalid или имеет значение false
-    const ariaInvalid = await element.getAttribute('aria-invalid');
-    expect(ariaInvalid).not.toBe('true');
+    await expect(element).not.toHaveAttribute('aria-invalid', 'true');
   }
 }

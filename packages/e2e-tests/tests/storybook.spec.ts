@@ -1,9 +1,9 @@
 import { test, expect } from './fixtures/modal-fixtures';
 
-test.describe('Modal Renderer Storybook Integration Tests', () => {
+test.describe('modal Renderer Storybook Integration Tests', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
   });
 
   test('should verify storybook is running', async ({ basePage }) => {
@@ -86,7 +86,7 @@ test.describe('Modal Renderer Storybook Integration Tests', () => {
 
     // Проверяем отсутствие ошибок в консоли
     const errors = await basePage.page.evaluate(() => {
-      return window.console.error ? 'errors detected' : 'no errors';
+      return globalThis.console.error ? 'errors detected' : 'no errors';
     });
 
     expect(errors).toBe('no errors');
@@ -109,7 +109,9 @@ test.describe('Modal Renderer Storybook Integration Tests', () => {
       await basePage.expectStoryTitleToContain('Демонстрация модалок');
 
       // Небольшая пауза для стабилизации
-      await basePage.page.waitForTimeout(100);
+      await basePage.page.waitForFunction(
+        () => document.readyState === 'complete',
+      );
     }
   });
 

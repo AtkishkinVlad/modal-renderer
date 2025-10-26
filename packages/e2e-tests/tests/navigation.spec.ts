@@ -1,9 +1,9 @@
 import { test, expect } from './fixtures/modal-fixtures';
 
-test.describe('Storybook Navigation and Integration', () => {
+test.describe('storybook Navigation and Integration', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
   });
 
   test('should navigate between different modal stories', async ({
@@ -74,7 +74,9 @@ test.describe('Storybook Navigation and Integration', () => {
       await basePage.expectStoryTitleToContain('Демонстрация модалок');
 
       // Небольшая пауза для стабилизации
-      await basePage.page.waitForTimeout(100);
+      await basePage.page.waitForFunction(
+        () => document.readyState === 'complete',
+      );
     }
   });
 
@@ -108,6 +110,7 @@ test.describe('Storybook Navigation and Integration', () => {
       // Если история не существует, должна быть ошибка или редирект
     } catch (error) {
       // Ожидаем ошибку для несуществующей истории
+      // eslint-disable-next-line playwright/no-conditional-expect
       expect(error).toBeDefined();
     }
   });
@@ -117,7 +120,7 @@ test.describe('Storybook Navigation and Integration', () => {
     await basePage.page.goto(
       '/iframe.html?id=modal-renderer-simple-modal--default&viewMode=story&args={}',
     );
-    await basePage.page.waitForLoadState('networkidle');
+    await basePage.page.waitForLoadState('domcontentloaded');
 
     await basePage.expectStoryTitleToContain('Демонстрация модалок');
   });
@@ -127,7 +130,7 @@ test.describe('Storybook Navigation and Integration', () => {
 
     // Проверяем, что мы находимся в iframe
     const isInIframe = await basePage.page.evaluate(
-      () => window !== window.top,
+      () => globalThis !== globalThis.top,
     );
     expect(isInIframe).toBe(true);
   });
