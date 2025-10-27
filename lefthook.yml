@@ -1,13 +1,3 @@
-pre-push:
-  parallel: true
-  commands:
-    check-format:
-      tags: check format
-      run: npm run check-format
-    lint:
-      tags: lint files
-      run: npm run lint
-
 commit-msg:
   commands:
     commit-lint:
@@ -16,6 +6,9 @@ commit-msg:
 
 pre-commit:
   commands:
-    format:
-      tags: format files
-      run: npm run format {staged_files}
+    lint:
+      tags: lint files
+      run: npm run lint
+    format-check:
+      tags: check formatting
+      run: npm run format:check

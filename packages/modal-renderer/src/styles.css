@@ -1,0 +1,148 @@
+/* Modal Renderer Styles - Only for overlay and animations */
+
+/* CSS анимации для модалок */
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes modalFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes modalSlideOut {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95) translateY(-24px);
+  }
+}
+
+/* Базовые стили для модалок - только структура */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: modalFadeIn 0.2s ease-out;
+}
+
+.modal-content {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow:
+    0 25px 50px -12px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow: auto;
+  position: relative;
+  animation: modalSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Адаптивность */
+@media (max-width: 640px) {
+  .modal-content {
+    margin: 16px;
+    max-width: calc(100vw - 32px);
+    max-height: calc(100vh - 32px);
+    border-radius: 12px;
+  }
+}
+
+/* Темная тема */
+@media (prefers-color-scheme: dark) {
+  .modal-overlay {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+
+  .modal-content {
+    background: #1f2937;
+    box-shadow:
+      0 25px 50px -12px rgba(0, 0, 0, 0.5),
+      0 0 0 1px rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Улучшенные анимации */
+.modal-overlay.modal-closing {
+  animation: modalFadeOut 0.2s ease-in forwards;
+}
+
+.modal-content.modal-closing {
+  animation: modalSlideOut 0.2s ease-in forwards;
+}
+
+/* Accessibility improvements */
+.modal-content:focus {
+  outline: none;
+}
+
+/* Smooth scrolling for long content */
+.modal-content {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar for webkit browsers */
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+@media (prefers-color-scheme: dark) {
+  .modal-content::-webkit-scrollbar-track {
+    background: #374151;
+  }
+
+  .modal-content::-webkit-scrollbar-thumb {
+    background: #6b7280;
+  }
+
+  .modal-content::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+  }
+}

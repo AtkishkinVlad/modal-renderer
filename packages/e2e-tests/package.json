@@ -1,0 +1,32 @@
+{
+  "name": "@atkvs/modal-renderer-e2e-tests",
+  "version": "2.0.0-alpha.1",
+  "private": true,
+  "description": "End-to-end tests for modal-renderer library using Playwright",
+  "type": "module",
+  "scripts": {
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:debug": "playwright test --debug",
+    "test:e2e:report": "playwright show-report",
+    "install:browsers": "playwright install",
+    "build": "echo 'E2E tests package - no build needed'",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "clean": "rm -rf test-results playwright-report node_modules"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "@types/node": "^22.5.1",
+    "@typescript-eslint/eslint-plugin": "^8.46.2",
+    "@typescript-eslint/parser": "^8.46.2",
+    "eslint": "^9.38.0",
+    "eslint-plugin-playwright": "^2.2.2",
+    "prettier": "^3.6.2",
+    "typescript": "^5.5.3",
+    "typescript-eslint": "^8.46.2"
+  }
+}
